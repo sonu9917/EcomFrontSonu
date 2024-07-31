@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* App.css */
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Your other styles */
+body {
+  font-family: 'Public Sans', sans-serif;
+}
+
+.backgroundRemove {
+  background-image: url('./images/banner-2.png');
+  background-position: bottom center;
+  background-color: black;
+}
+
+@media (max-width: 1024px) {
+  .backgroundRemove {
+    background-image: none;
+  }
+}
+
+.slick-prev {
+  left: -10px !important;
+}
+
+.slick-next {
+  right: 0px !important;
+}
