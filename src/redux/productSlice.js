@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000",
+    baseUrl: "http://198.211.106.177:5003",
 
     prepareHeaders: async (headers, { getState }) => {
       try {
