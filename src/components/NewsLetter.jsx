@@ -1,5 +1,5 @@
 import React from "react";
-import newsLetterBg from '../images/bg.jpg'
+import newsLetterBg from '../assets/bg.jpg'
 
 const NewsLetter = () => {
   return (

@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import backgroundImage from "../images/banner.jpg";
+import backgroundImage from "../assets/banner.jpg";
 import ProductSlider from "./ProductSlider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import NewsLetter from "./NewsLetter";
-import smallScreenBanner from "../images/small-screen-banner.png";
+import smallScreenBanner from "../assets/small-screen-banner.png";
 
 
 const Home = () => {

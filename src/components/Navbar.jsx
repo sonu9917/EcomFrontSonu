@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import logo from "../images/logo.png";
+import logo from "../assets/logo.png";
 import { Link, Navigate } from "react-router-dom";
 import { MainContext } from "../context/Context";
 import { IoWalletSharp } from "react-icons/io5";

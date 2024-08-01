@@ -12,7 +12,7 @@ body {
 }
 
 .backgroundRemove {
-  background-image: url('./images/banner-2.png');
+  background-image: url('./assets/banner-2.png');
   background-position: bottom center;
   background-color: black;
 }
