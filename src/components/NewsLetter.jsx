@@ -8,7 +8,7 @@ const NewsLetter = () => {
     <section
       className="bg-cover h-[480px] relative grid grid-cols-1 md:grid-cols-2"
       style={{
-        backgroundImage: `url(${newsLetterBg})`,
+        backgroundImage: `url(./${newsLetterBg})`,
         backgroundPosition: "bottom center",
         backgroundColor: "#000",
       }}
