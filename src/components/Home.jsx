@@ -16,7 +16,7 @@ const Home = () => {
       <section
         className="min-h-screen bg-cover flex justify-center items-center"
         style={{
-          backgroundImage: `url(${backgroundImage})`,
+          backgroundImage: `url(./${backgroundImage})`,
           backgroundPosition: "center center",
         }}
       >
@@ -56,7 +56,7 @@ const Home = () => {
       <section className="min-h-screen bg-cover grid backgroundRemove grid-cols-1 lg:grid-cols-2 container mx-auto">
         <div className="flex items-center justify-center  p-8 md:p-0">
           <img
-            src={smallScreenBanner}
+            src={`./${smallScreenBanner}`}
             className="mt-5 block lg:hidden"
             alt=""
           />
