@@ -8,8 +8,7 @@ yarn-error.log
 .env.*
 
 # Build output
-dist/
-build/
+src/
 coverage/
 *.tgz
 
