@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import backgroundImage from "../assets/banner.jpg";
+import {backgroundImage,smallScreenBanner} from "../assets";
 import ProductSlider from "./ProductSlider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import NewsLetter from "./NewsLetter";
-import smallScreenBanner from "../assets/small-screen-banner.png";
+
 
 
 const Home = () => {
@@ -16,7 +16,7 @@ const Home = () => {
       <section
         className="min-h-screen bg-cover flex justify-center items-center"
         style={{
-          backgroundImage: `url(./${backgroundImage})`,
+          backgroundImage: `url(${backgroundImage})`,
           backgroundPosition: "center center",
         }}
       >
@@ -53,10 +53,10 @@ const Home = () => {
       </section>
 
       {/* second section */}
-      <section className="min-h-screen bg-cover grid backgroundRemove grid-cols-1 lg:grid-cols-2 container mx-auto">
+      <section className="min-h-screen bg-black bg-cover grid backgroundRemove grid-cols-1 lg:grid-cols-2  mx-auto">
         <div className="flex items-center justify-center  p-8 md:p-0">
           <img
-            src={`./${smallScreenBanner}`}
+            src={smallScreenBanner}
             className="mt-5 block lg:hidden"
             alt=""
           />

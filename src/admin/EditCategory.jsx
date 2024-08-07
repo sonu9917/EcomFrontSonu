@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
-import { useAddCategoryMutation, useGetCategoryQuery } from '../redux/productSlice';
+import React, { useEffect, useState } from 'react';
+import {  useGetCategoryQuery, useGetSingleCategoryQuery, useUpdateCategoryMutation } from '../redux/productSlice';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const AddCategory = () => {
+const EditCategory = () => {
   const [categoryName, setCategoryName] = useState('');
-  const [addCategory, { isLoading, isSuccess, isError }] = useAddCategoryMutation();
   const navigate = useNavigate();
+  
+  const {id} = useParams()
+  
+  const [updateCategory, { isError, isLoading, isSuccess }] = useUpdateCategoryMutation();
+  const { data, error: fetchError } = useGetSingleCategoryQuery(id);
+
+  useEffect(()=>{
+    setCategoryName(data?.category.name)
+  },[data])
 
   const handleChange = (e) => {
     setCategoryName(e.target.value);
@@ -18,21 +26,21 @@ const AddCategory = () => {
     e.preventDefault();
 
     try {
-      await addCategory({ name: categoryName }).unwrap();
-      toast.success('Category added successfully');
-      setCategoryName(''); // Clear input field after success
-      refetch(); // Refetch categories to update the list
-      navigate('/admin/categoryList'); // Redirect to category list after success
-    } catch (error) {
-      toast.error(error?.data?.message || 'Error adding category');
-      console.error(error);
-    }
+        console.log(categoryName)
+        await updateCategory({ id,data:{name:categoryName}}).unwrap();
+        toast.success("Category updated successfully");
+        navigate("/admin/categoryList");
+        refetch()
+      } catch (error) {
+        toast.error("Error updating categrory");
+        console.log(error);
+      }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Add Category</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Edit Category</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="categoryName">
@@ -55,7 +63,7 @@ const AddCategory = () => {
                 }`}
               disabled={isLoading}
             >
-              {isLoading ? 'Adding...' : 'Add Category'}
+              {isLoading ? 'Saving...' : 'Save Category'}
             </button>
             <button
               onClick={() => navigate('/admin/categoryList')}
@@ -71,4 +79,4 @@ const AddCategory = () => {
   );
 };
 
-export default AddCategory;
+export default EditCategory;

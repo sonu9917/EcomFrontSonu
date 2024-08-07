@@ -18,7 +18,7 @@ const Dashboard = () => {
         <div className="ml-4 mr-4 bg-[#1B233B]  h-16 flex justify-between items-center text-white pl-4 pr-4">
           <div>
             <i className="fas fa-briefcase text-xl" aria-hidden="true"></i>
-            <span className="pl-4 font-bold text-xl">Products</span>
+            <span className="pl-4 font-bold text-xl hidden md:inline-block">Products</span>
           </div>
           <Link to={"/admin/addProduct"}>
             <div className="text-xl font-medium cursor-pointer">

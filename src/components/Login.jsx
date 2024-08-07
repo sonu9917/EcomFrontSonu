@@ -27,7 +27,7 @@ const Login = () => {
             toast.success('Login successful!');
             setCookie('token', response.data.token, { path: '/' });
 
-            navigate('/');
+            navigate('/admin/dashboard');
 
           }
         })
@@ -36,6 +36,7 @@ const Login = () => {
           toast.error(err.response.data.error); // Display error toast
         });
     } catch (error) {
+      console.log(error)
       setLoading(false); // Stop the loader
       toast.error(error.response.data.error); // Display error toast
     }

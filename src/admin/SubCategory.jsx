@@ -1,13 +1,29 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useGetSubCategoryQuery } from "../redux/productSlice";
+import { Link, useNavigate } from "react-router-dom";
+import { useDeleteSubCategoryMutation, useGetSubCategoryQuery } from "../redux/productSlice";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const SubCategory = () => {
 
-    const {data} = useGetSubCategoryQuery()
+  const { data,refetch } = useGetSubCategoryQuery();
+  const [deleteSubCategory, { isError, isSuccess, isLoading }] = useDeleteSubCategoryMutation();
+  const navigate = useNavigate()
 
-    console.log(data)
+  // delete category handler
+  const onDelete = (id) => {
+    deleteSubCategory(id).unwrap()
+      .then((res) =>
+         {
+          console.log(res)
+        toast.success('subCategory deleted successfully');
+        refetch(); // Refetch categories after successful deletion
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.data.message);
+      });
+  };
 
   return (
     <div className="container mx-auto mt-10">
@@ -56,7 +72,7 @@ const SubCategory = () => {
                 <td className="py-2 px-4 border-b border-gray-200 text-center">
                   <button
                     onClick={() => {
-                      navigate("/admin/editProduct/" + subcategory._id);
+                      navigate("/admin/editSubCategory/" + subcategory._id);
                     }}
                     className="text-blue-500 hover:text-blue-700 mx-2"
                   >

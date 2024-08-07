@@ -9,7 +9,7 @@ const ContectInformation = () => {
         <i className="fas fa-building text-blue-500"></i>
         <div>
           <p className="text-gray-700 font-semibold">Company Name:</p>
-          <p className="text-gray-600">TechInnovate Solutions</p>
+          <p className="text-gray-600">Art rader</p>
         </div>
       </div>
       <div className="flex items-center space-x-3">
@@ -30,7 +30,7 @@ const ContectInformation = () => {
         <i className="fas fa-envelope text-blue-500"></i>
         <div>
           <p className="text-gray-700 font-semibold">Email:</p>
-          <p className="text-gray-600">support@techinnovate.com</p>
+          <p className="text-gray-600">nzartrader@gmail.com</p>
         </div>
       </div>
       <div className="flex items-center space-x-3">
@@ -44,13 +44,7 @@ const ContectInformation = () => {
           </p>
         </div>
       </div>
-      <div className="flex items-center space-x-3">
-        <i className="fas fa-clock text-blue-500"></i>
-        <div>
-          <p className="text-gray-700 font-semibold">Business Hours:</p>
-          <p className="text-gray-600">Monday - Friday, 9:00 AM - 6:00 PM (PST)</p>
-        </div>
-      </div>
+     
     </div>
   </div>
 

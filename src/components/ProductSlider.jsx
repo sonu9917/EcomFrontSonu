@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const ProductSlider = () => {
   const { data } = useGetProductQuery();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const settings = {
     dots: false,
@@ -21,6 +21,7 @@ const ProductSlider = () => {
         settings: {
           slidesToShow: 4,
           slidesToScroll: 1,
+          rows: 2,
         },
       },
       {
@@ -28,6 +29,15 @@ const ProductSlider = () => {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
+          rows: 2,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          rows: 1,
         },
       },
       {
@@ -35,6 +45,7 @@ const ProductSlider = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          rows: 1,
         },
       },
     ],
@@ -42,31 +53,31 @@ const ProductSlider = () => {
 
   return (
     <Slider {...settings}>
-
-      {
-        data?.product.map((product) => (
-          <div onClick={() => navigate(`/shop/${product._id}`)}  className="max-w-md mx-auto p-4 rounded-lg overflow-hidden shadow-md hover:shadow-lg">
-            <div className="">
-              <img
-                className="w-full h-[250px]"
-                src={product.images[0]}
-                alt="Product Image"
-              />
-             
-            </div>
-            <div className="p-4 bg-white">
-              <h3 className="text-xl font-bold mb-2 text-[#8b7bcf]">{product.name}</h3>
-              {/* <p className="text-gray-600 text-sm mb-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae ante
-                vel eros fermentum faucibus sit amet euismod lorem.
-              </p> */}
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-lg text-[#334155]">${product.price}</span>
-              </div>
+      {data?.product.map((product) => (
+        <div
+          key={product._id} // Add a key prop for better rendering performance
+          onClick={() => navigate(`/shop/${product._id}`)}
+          className="max-w-full mx-auto p-4 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+        >
+          <div className="w-full flex justify-center">
+            <img
+              className="w-full h-[250px] object-cover rounded-t-lg"
+              src={product.images[0]}
+              alt={product.name}
+            />
+          </div>
+          <div className="p-4 bg-white rounded-br rounded-bl">
+            <h3 className="text-lg sm:text-xl font-bold mb-2 text-[#8b7bcf] break-words truncate">
+              {product.name}
+            </h3>
+            <div className="flex items-center justify-between">
+              <span className="font-bold text-md sm:text-lg text-[#334155]">
+                ${product.price}.00
+              </span>
             </div>
           </div>
-        ))
-      }
+        </div>
+      ))}
     </Slider>
   );
 };

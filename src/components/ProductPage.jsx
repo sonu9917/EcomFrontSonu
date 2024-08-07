@@ -215,7 +215,7 @@ const ProductPage = () => {
                           {product.name}
                         </h3>
                         <p className="text-gray-700 font-semibold flex justify-between">
-                          ${product.price}
+                          ${product.price}.00
                           <div>
                             {isProductInWishList ? (
                               <FaHeart

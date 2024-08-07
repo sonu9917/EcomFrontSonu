@@ -366,7 +366,8 @@ const Membership = () => {
           )}
 
           {!isMembershipExpired() && (
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 mb-2">
+              {`Your have purchased ${userSubscription} Membership `} <br/>
               Your membership is active and will expire on {new Date(filterCheckoutExpiryDate).toLocaleDateString()}.
             </p>
           )}

@@ -1,6 +1,6 @@
 import React from "react";
-import aboutBanner from "../assets/about-banner.jpg";
-import aboutSecondImage from "../assets/about-second-image.jpg";
+import {aboutBanner,aboutSecondImage} from "../assets";
+
 
 const About = () => {
   return (

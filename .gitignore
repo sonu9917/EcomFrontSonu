@@ -8,6 +8,7 @@ yarn-error.log
 .env.*
 
 # Build output
+dist/
 build/
 coverage/
 *.tgz
@@ -52,7 +53,12 @@ public/
 # Ignore compiled CSS
 *.css.map
 
-
+# Ignore static assets
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
 
 # Ignore temporary files
 *.tmp

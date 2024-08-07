@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import logo from "../assets/logo.png";
+import {logo} from "../assets";
 import { Link, Navigate } from "react-router-dom";
 import { MainContext } from "../context/Context";
 import { IoWalletSharp } from "react-icons/io5";
@@ -128,7 +128,7 @@ const Navbar = () => {
                 </Link>
 
                 <ul className="absolute top-full left-0  bg-[#110f0f] z-[9999] w-full py-8 px-8 grid grid-cols-3 gap-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 pointer-events-none group-hover:pointer-events-auto transform -translate-y-2">
-                  {category?.category.map((cat) => {
+                  {category?.category?.map((cat) => {
                     return (
                       <div
                         key={cat._id}

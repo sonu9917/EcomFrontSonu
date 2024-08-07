@@ -9,7 +9,7 @@ const ReferralLink = () => {
   const [copySuccess, setCopySuccess] = useState(false);
 
   // Construct referral link from user data
-  const referralLink = `http://localhost:5173/register?ref=${data?.user.referralCode}`;
+  const referralLink = `http://198.211.106.177:5173/register?ref=${data?.user.referralCode}`;
 
   // Handle copy action
   const handleCopy = () => {

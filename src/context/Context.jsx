@@ -14,14 +14,14 @@ const Context = (props) => {
       name: "6-Months Membership",
       price: 5000,
       key: "6-month",
-      PriceId: "price_1Phpln2K1YkP5vT5spde3jIf",
+      PriceId: "price_1PjEjZ2K1YkP5vT5ZkVbBQVm",
     },
     {
       _id:123097,
       name: "12-Months Membership",
       price: 9000,
       key: "12-month",
-      PriceId: "price_1PhpOq2K1YkP5vT5KROUFZCD",
+      PriceId: "price_1PjEjZ2K1YkP5vT5ZkVbBQVm",
     },
   ];
 

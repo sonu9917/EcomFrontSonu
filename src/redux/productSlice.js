@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://198.211.106.177:5003",
+    baseUrl: "http://198.211.106.177:5000",
 
     prepareHeaders: async (headers, { getState }) => {
       try {
@@ -20,7 +20,7 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Products"],
+  tagTypes: ["Products",],
   endpoints: (builder) => ({
     // get all product
     getProduct: builder.query({
@@ -58,9 +58,19 @@ export const api = createApi({
       query: () => `/category/getCategory`,
     }),
 
+    // get single category
+    getSingleCategory: builder.query({
+      query: (id) => `/category/getCategory/${id}`,
+    }),
+
     // get all subCategory
     getSubCategory: builder.query({
       query: () => `/subcategory/getSubcategory`,
+    }),
+
+    // get single subcategory
+    getSingleSubCategory: builder.query({
+      query:(id) =>`/subcategory/getSubCategory/${id}`
     }),
 
     // get all checkout
@@ -107,6 +117,23 @@ export const api = createApi({
       invalidatesTags: ["Products"],
     }),
 
+     // delete category logic
+     deleteCategory: builder.mutation({
+      query: (id) => ({
+        url: `/category/deleteCategory/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Products"],
+    }),
+
+    // delete subcategory logic
+    deleteSubCategory:builder.mutation({
+      query: (id) => ({
+        url: `/subcategory/deleteSubCategory/${id}`,
+        method: "DELETE",
+      }),
+    }),
+
     //  update product logic
     updateProduct: builder.mutation({
       query: ({ id, data }) => ({
@@ -116,6 +143,24 @@ export const api = createApi({
       }),
       invalidatesTags: ["Products"],
     }),
+
+    // update category logic
+    updateCategory: builder.mutation({
+      query: ({id,data}) => ({
+        url: `/category/updateCategory/${id}`,
+        method: "PUT",
+        body: data,
+      })
+    }),
+
+    // update subCategory logic
+    updateSubCategory: builder.mutation({
+      query:({id,data}) => ({
+        url: `/subcategory/updateSubCategory/${id}`,
+        method: "PUT",
+        body: data,
+      })
+    })
   }),
 });
 
@@ -132,5 +177,11 @@ export const {
   useAddSubCategoryMutation,
   useGetSubCategoryQuery,
   useGetProductsByCategoryAndSubcategoryQuery,
-  useGetAllCheckoutQuery
+  useGetAllCheckoutQuery,
+  useDeleteCategoryMutation,
+  useUpdateCategoryMutation,
+  useGetSingleCategoryQuery,
+  useDeleteSubCategoryMutation,
+  useGetSingleSubCategoryQuery,
+  useUpdateSubCategoryMutation
 } = api;

@@ -39,6 +39,14 @@ import ReturnPolicy from "./components/ReturnPolicy";
 import TermsAndConditions from "./components/TermsAndCondition";
 import FailedPayment from "./components/FailedPayment";
 import MembershipCheckout from "./components/MembershipCheckout";
+import VisitStore from "./admin/VisitStore";
+import PaymentMethods from "./admin/PaymentMethods";
+import ShippingSettings from "./admin/ShippingSettings";
+import SocialLinks from "./admin/SocialLinks";
+import StoreSeo from "./admin/StoreSeo";
+import AddStore from "./admin/AddStore";
+import EditCategory from "./admin/EditCategory";
+import EditSubCategory from "./admin/EditSubCategory";
 
 function App() {
   const router = createBrowserRouter([
@@ -172,12 +180,20 @@ function App() {
           element: <AddCategory />,
         },
         {
+          path: "editCategory/:id",
+          element: <EditCategory/>,
+        },
+        {
           path: "sub-categoryList",
           element: <SubCategory />,
         },
         {
           path: "addSubCategory",
           element: <AddSubCategory />,
+        },
+        {
+          path: "editSubCategory/:id",
+          element: <EditSubCategory />,
         },
         {
           path: "payOut",
@@ -204,6 +220,54 @@ function App() {
           element: (
             <ProtectedRoutesForAdmin>
               <WishListProduct />
+            </ProtectedRoutesForAdmin>
+          ),
+        },
+        {
+          path: "visitStore",
+          element: (
+            <ProtectedRoutesForAdmin>
+              <VisitStore />
+            </ProtectedRoutesForAdmin>
+          ),
+        },
+        {
+          path: "settings/payment",
+          element: (
+            <ProtectedRoutesForAdmin>
+              <PaymentMethods/>
+            </ProtectedRoutesForAdmin>
+          ),
+        },
+        {
+          path: "settings/shipping",
+          element: (
+            <ProtectedRoutesForAdmin>
+              <ShippingSettings/>
+            </ProtectedRoutesForAdmin>
+          ),
+        },
+        {
+          path: "settings/social-profile",
+          element: (
+            <ProtectedRoutesForAdmin>
+              <SocialLinks/>
+            </ProtectedRoutesForAdmin>
+          ),
+        },
+        {
+          path: "settings/store-seo",
+          element: (
+            <ProtectedRoutesForAdmin>
+              <StoreSeo/>
+            </ProtectedRoutesForAdmin>
+          ),
+        },
+        {
+          path: "settings/store",
+          element: (
+            <ProtectedRoutesForAdmin>
+              <AddStore/>
             </ProtectedRoutesForAdmin>
           ),
         },
@@ -237,7 +301,7 @@ export const ProtectedRoutesForAdmin = ({ children }) => {
     return <Navigate to="/login" state={{ from: location }} replace />; // Redirect to login if there's an error or no user data
   }
 
-  if (data.user.role === "admin") {
+  if (data.user.role === "admin" || data.user.role === "super-admin") {
     return children; // Render children if user is an admin
   } else {
     return (

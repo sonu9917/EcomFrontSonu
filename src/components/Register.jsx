@@ -49,7 +49,7 @@ const Register = () => {
               toast.success('Login successful!');
               setCookie('token', response.data.token, { path: '/' });
 
-              navigate('/');
+              navigate('/admin/dashboard');
 
             }
           })
@@ -164,7 +164,6 @@ const Register = () => {
                   className="border py-3 px-4 w-full "
                   value={formData.referralCode}
                   onChange={(e) => { setFormData({ ...formData, referralCode: e.target.value }) }}
-                  required
                 />
               </div>
 

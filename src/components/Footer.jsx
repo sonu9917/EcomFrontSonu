@@ -1,16 +1,18 @@
 import React from "react";
-import logo from "../assets/logo.png";
+import { logo } from "../assets";
 import { Link, useNavigate } from "react-router-dom";
+import { useGetCategoryQuery } from "../redux/productSlice";
 
 
 const Footer = () => {
   const navigate = useNavigate()
+  const { data: category } = useGetCategoryQuery();
   return (
     <>
       <div className="bg-[#110f0f]">
         <div className="max-w-[1200px] mx-auto py-8 px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="flex items-center justify-center md:justify-start">
-            <img src={logo} onClick={()=>navigate('/')} alt="Logo" className="cursor-pointer w-full max-w-[150px]" />
+            <img src={logo} onClick={() => navigate('/')} alt="Logo" className="cursor-pointer w-full max-w-[150px]" />
           </div>
           <div className="flex flex-col gap-6">
             <h1 className="text-[#ef9364] text-xl font-semibold">
@@ -52,34 +54,17 @@ const Footer = () => {
               TOP CATEGORIES
             </h1>
             <ul className="text-white font-normal text-[14px] flex flex-col gap-2">
-              <li>
-                <Link className="hover:text-[#ef9364] transition-all">
-                  Uncategorized
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:text-[#ef9364] transition-all">Art</Link>
-              </li>
-              <li>
-                <Link className="hover:text-[#ef9364] transition-all">
-                  CRAFT
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:text-[#ef9364] transition-all">
-                  Woodcraft
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:text-[#ef9364] transition-all">
-                  Carvings & Sculptures
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:text-[#ef9364] transition-all">
-                  Mixed Media
-                </Link>
-              </li>
+              {
+                category?.category?.map((cat) => {
+                  return (
+                    <li>
+                    <Link  to={`/products/${cat._id}`} className="hover:text-[#ef9364] transition-all">
+                      {cat.name}
+                    </Link>
+                  </li>
+                  )
+                })
+              }
             </ul>
           </div>
           <div className="flex flex-col gap-6">
@@ -91,7 +76,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a href="mailto:nzartrader@gmail.com"  className="text-[#ef9364] transition-all">
+                <a href="mailto:nzartrader@gmail.com" className="text-[#ef9364] transition-all">
                   nzartrader@gmail.com
                 </a>
               </li>
