@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://198.211.106.177:5000",
+    baseUrl: "https://demo.servaapplabs.com:5000",
 
     prepareHeaders: async (headers, { getState }) => {
       try {
