@@ -8,11 +8,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToWishList, removeFromWishList } from "../redux/wishListSlice";
 import ProductInquiry from "./ProductInquiry";
 import ContectInformation from "./ContectInformation";
+import Cookie from 'js-cookie';
+import NotLoggedIn from "./NotLoggedIn";
+
 
 const SingleProduct = () => {
   const { id } = useParams();
   const { data } = useGetSingleProductQuery(id);
   const { data: moreProducts } = useGetProductQuery();
+  const token = Cookie.get('token');
   const [activeTab, setActiveTab] = useState("description");
   const [visibleProductsCount, setVisibleProductsCount] = useState(8); // State for controlling displayed products
 
@@ -108,13 +112,21 @@ const SingleProduct = () => {
       case "contactInfo":
         return (
           <div className="p-4 bg-gray-100 rounded-lg shadow-md">
-            <ContectInformation />
+          
+
+            {
+              token ?   <ContectInformation /> : <NotLoggedIn/>
+            }
           </div>
         );
       case "productInquiry":
         return (
           <div className="p-4 bg-gray-100 rounded-lg shadow-md">
-            <ProductInquiry id={id} />
+
+            {
+              token ?  <ProductInquiry id={id} /> :  <NotLoggedIn/>
+            }
+           
           </div>
         );
       default:

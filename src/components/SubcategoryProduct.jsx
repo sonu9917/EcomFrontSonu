@@ -66,8 +66,13 @@ const SubcategoryProduct = () => {
             </div>
           ) : (
             <>
-              <div className='text-4xl pb-4 border-b-4 border-blue-500 rounded mt-2 mb-3'>
-                {categoryName}{selectedSubCategory !== '' && ` / ${subCategoryName}`}
+              <div className='text-4xl pb-4  rounded mt-2 mb-3'>
+
+                {
+                  categoryName != '' ? subCategoryName : categoryName
+                }
+
+                {/* {categoryName}{selectedSubCategory !== '' && ` / ${subCategoryName}`} */}
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {products?.product.map((product, i) => {
@@ -77,38 +82,36 @@ const SubcategoryProduct = () => {
                   return (
                     <div
                       key={i}
-                      className="border rounded-lg overflow-hidden shadow-lg cursor-pointer transition-transform transform hover:scale-105"
+                      className="border pl-4 pt-3 shadow-lg cursor-pointer transition-transform transform hover:scale-105"
                     >
-                      <img
-                        src={
-                          product.images[0]
-                        }
+                      <div className='w-[265px] h-[262px]'>
+                        <img
+                          src={
+                            product.images[0]
+                          }
 
-                        alt={product.name}
-                        className="w-full h-48 object-cover"
-                        onClick={() => navigate(`/shop/${product._id}`)}
-                      />
-                      <div className="p-4">
-                        <h3 className="text-lg font-bold text-[#F05025]">
+                          alt={product.name}
+                          className="w-full h-full object-cover"
+                          onClick={() => navigate(`/shop/${product._id}`)}
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <h2 className='mt-2 text-gray-400'>{categoryName}</h2>
+                        <h3 className="text-lg  font-medium text-[#3a3c3c]">
                           {product.name}
                         </h3>
-                        <p className="text-gray-700 font-semibold flex justify-between">
+                        <p className="text-gray-700 text-lg font-medium flex justify-between">
                           ${product.price}
-                          <div>
-                            {isProductInWishList ? (
-                              <FaHeart
-                                size={20}
-                                fill="red"
-                                onClick={() => handleWishListClick(product._id)}
-                              />
-                            ) : (
-                              <FaRegHeart
-                                size={20}
-                                onClick={() => handleWishListClick(product._id)}
-                              />
-                            )}
-                          </div>
                         </p>
+                        <button
+                          className={`pt-1 pb-1 px-3 mt-2 mb-5 w-[200px]  text-white  rounded bg-[#f05029] transition-colors duration-300 hover:bg-[#e03e1f]`}
+                          onClick={() => handleWishListClick(product._id)}
+                        >
+                          {isProductInWishList
+                            ? "Remove Wishlish"
+                            : "Add Wishlist"}
+                        </button>
                       </div>
                     </div>
                   );

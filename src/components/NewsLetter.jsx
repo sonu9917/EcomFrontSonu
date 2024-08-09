@@ -49,7 +49,7 @@ const NewsLetter = () => {
 
   return (
     <section
-      className="bg-cover h-[480px] relative grid grid-cols-1 md:grid-cols-2"
+      className="bg-cover h-[480px] relative grid grid-cols-1 md:grid-cols-1"
       style={{
         backgroundImage: `url(${newsLetterBg})`,
         backgroundPosition: "bottom center",
@@ -58,11 +58,11 @@ const NewsLetter = () => {
     >
       <div className="absolute top-0 left-0 w-full h-full bg-[#271919] opacity-[.71]"></div>
 
-      <div className="z-10 text-white flex flex-col gap-6 justify-center p-8 md:pl-24 max-w-[1200px] mx-auto">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold">
+      <div className="z-10 text-white flex flex-col p-4 md:p-0  gap-6  md:pl-12 max-w-[700px] justify-center">
+        <h1 className="text-2xl md:text-3xl lg:text-[30px] font-semibold">
           Subscribe To <span className="text-[#F05025]">Our Newsletter</span>
         </h1>
-        <p className="text-sm md:text-base lg:text-lg">
+        <p className="text-sm md:text-base lg:text-lg w-full">
           Join our newsletter, so that we reach out to you with our best
           services and offers.
         </p>
@@ -79,7 +79,7 @@ const NewsLetter = () => {
             onChange={handleEmailChange}
             required
             style={{
-              height: '60px',
+              height: '50px',
               minWidth: '0', // Allow flexbox to control width
             }}
           />
@@ -87,7 +87,7 @@ const NewsLetter = () => {
             type="submit"
             className="flex-shrink-0 focus:outline-none text-white bg-[#f05025]  focus:ring-4 focus:ring-purple-300 font-bold text-sm p-2.5 rounded"
             style={{
-              height: '60px',
+              height: '50px',
               minWidth: '120px', // Fixed width for the button
             }}
           >

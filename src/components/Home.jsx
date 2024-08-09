@@ -14,14 +14,14 @@ const Home = () => {
     <>
       {/* first section */}
       <section
-        className="min-h-screen bg-cover flex justify-center items-center"
+        className="bg-no-repeat bg-cover -mt-1 flex justify-center items-center"
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundPosition: "center center",
         }}
       >
-        <div className="max-w-[1140px] mx-auto px-4">
-          <div className="text-center flex items-center flex-col mb-5 font-semibold">
+        <div className="max-w-[1140px] mx-auto px-4 pt-[100px] pb-[100px]">
+          <div className="text-center flex items-center gap-5 flex-col mb-5 font-semibold">
             <h1 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-[70px]">
               <span className="text-[#8B7BCF]">Empowering</span> Creators,
             </h1>
@@ -31,7 +31,7 @@ const Home = () => {
           </div>
 
           <div>
-            <p className="text-center text-white text-sm sm:text-base md:text-lg lg:text-xl font-thin px-4 sm:px-8 md:px-16 lg:px-24 tracking-wider">
+            <p className="text-center text-white text-sm sm:text-base md:text-lg lg:text-[18px] font-thin px-4 sm:px-8 md:px-16  tracking-wider">
               By supporting artists and artisans, we are fostering a culture of
               innovation and self-expression. We are providing a platform for
               individuals to showcase their talents and ideas, and to make a
@@ -41,14 +41,14 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="w-full flex justify-center items-center mt-8 ">
+          <div className="w-full   flex justify-center items-center mt-8 ">
             <button
               type="button"
               className="focus:outline-none rounded-md text-white bg-[#f05025] hover:bg-[white] hover:text-[#f05025] focus:ring-4 focus:ring-purple-300 font-bold text-sm px-6 py-2 sm:px-8 sm:py-3 lg:px-10 lg:py-3.5 mb-2 transition duration-300"
             >
               LEARN MORE
             </button>
-          </div>
+          </div >
         </div>
       </section>
 
@@ -62,7 +62,7 @@ const Home = () => {
           />
         </div>
         <div className="pt-10 px-5 ">
-          <h4 className="text-white font-semibold mb-4 text-lg sm:text-xl md:text-2xl">
+          <h4 className="text-white font-medium mb-4 text-lg sm:text-xl md:text-[17px] pl-1">
             ABOUT US
           </h4>
           <div className="text-white font-bold leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-[70px] lg:leading-[67px]">

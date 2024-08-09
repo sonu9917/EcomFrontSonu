@@ -47,6 +47,7 @@ import StoreSeo from "./admin/StoreSeo";
 import AddStore from "./admin/AddStore";
 import EditCategory from "./admin/EditCategory";
 import EditSubCategory from "./admin/EditSubCategory";
+import WithoutLoginMembershipPage from "./components/WithoutLoginMembershipPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -76,6 +77,10 @@ function App() {
             <ProtectedRoutesForWithOutLogin>
               <Membership />
             </ProtectedRoutesForWithOutLogin>
+        },
+        {
+          path:"/membershipPage",
+          element:<WithoutLoginMembershipPage/>
         },
         {
           path: "/shop",
@@ -319,7 +324,7 @@ export const ProtectedRoutesForWithOutLogin = ({ children }) => {
     return children;
   } else {
     return (
-      <Navigate to="/login" />
+      <Navigate to="/membershipPage" />
     );
   }
 };

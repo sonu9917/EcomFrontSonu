@@ -57,11 +57,11 @@ const ProductSlider = () => {
         <div
           key={product._id} // Add a key prop for better rendering performance
           onClick={() => navigate(`/shop/${product._id}`)}
-          className="max-w-full mx-auto p-4 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+          className="max-w-full mx-auto p-4   shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
         >
           <div className="w-full flex justify-center">
             <img
-              className="w-full h-[250px] object-cover rounded-t-lg"
+              className="w-full h-[250px] object-cover"
               src={product.images[0]}
               alt={product.name}
             />

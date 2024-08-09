@@ -11,8 +11,8 @@ const Footer = () => {
     <>
       <div className="bg-[#110f0f]">
         <div className="max-w-[1200px] mx-auto py-8 px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="flex items-center justify-center md:justify-start">
-            <img src={logo} onClick={() => navigate('/')} alt="Logo" className="cursor-pointer w-full max-w-[150px]" />
+          <div className="flex justify-center md:justify-start">
+            <img src={logo} onClick={() => navigate('/')} alt="Logo" className="cursor-pointer w-[190px] h-[57px] " />
           </div>
           <div className="flex flex-col gap-6">
             <h1 className="text-[#ef9364] text-xl font-semibold">

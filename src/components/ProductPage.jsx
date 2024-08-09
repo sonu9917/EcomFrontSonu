@@ -215,39 +215,22 @@ const ProductPage = () => {
                         className="w-full h-48 object-cover"
                         onClick={() => navigate(`/shop/${product._id}`)}
                       />
-                      <div className="p-4">
-                        <h3 className="text-lg font-bold text-[#F05025]">
+                      <div className="p-4 text-center">
+                        <h3 className="text-lg font-bold  text-black">
                           {product.name}
                         </h3>
-                        <p className="text-gray-700 font-semibold flex justify-between">
+                        <p className="font-semibold text-[#F05025] text-[21px]">
                           ${product.price}.00
-                          <div>
-                            {/* {isProductInWishList ? (
-                              <FaHeart
-                                size={20}
-                                fill="red"
-                                onClick={() => handleWishListClick(product._id)}
-                              />
-                            ) : (
-                              <FaRegHeart
-                                size={20}
-                                onClick={() => handleWishListClick(product._id)}
-                              />
-                            )} */}
-
-                            
-                          </div>
-                          
                         </p>
 
                         <button
-                              className={`pt-1 pb-1 px-3 mt-4 text-white  rounded bg-[#f05029] transition-colors duration-300 hover:bg-[#e03e1f]`}
-                              onClick={() => handleWishListClick(product._id)}
-                            >
-                              {isProductInWishList
-                                ? "Remove Wishlish"
-                                : "Add Wishlist"}
-                            </button>
+                          className={`pt-1 pb-1 px-3 mt-3 text-white  rounded bg-[#f05029] transition-colors duration-300 hover:bg-[#e03e1f]`}
+                          onClick={() => handleWishListClick(product._id)}
+                        >
+                          {isProductInWishList
+                            ? "Remove Wishlish"
+                            : "Add Wishlist"}
+                        </button>
                       </div>
                     </div>
                   );
