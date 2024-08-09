@@ -9,7 +9,7 @@ const Footer = () => {
   const { data: category } = useGetCategoryQuery();
   return (
     <>
-      <div className="bg-[#110f0f]">
+      <div className="bg-[#110f0f] border-t-[2px] border-white">
         <div className="max-w-[1200px] mx-auto py-8 px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="flex justify-center md:justify-start">
             <img src={logo} onClick={() => navigate('/')} alt="Logo" className="cursor-pointer w-[190px] h-[57px] " />
