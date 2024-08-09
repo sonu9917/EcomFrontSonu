@@ -41,6 +41,7 @@ const ProductPage = () => {
   // Calculate the total number of products
   const totalProducts = productsData?.totalProducts || 0;
 
+
   // Load wishlist data from local storage on initial render
   useEffect(() => {
     const lsData = localStorage.getItem("wishList");
@@ -142,7 +143,6 @@ const ProductPage = () => {
             <div>
               <h1 className="mt-6 mb-6 text-xl font-bold">Categories</h1>
             </div>
-
             {category?.category.map((cat) => (
               <div key={cat._id} className="border-dotted mb-2 border-b-2 pb-2">
                 <h1
@@ -154,7 +154,12 @@ const ProductPage = () => {
                 </h1>
                 <ul className="list-disc pl-4 ml-2">
                   {subCategory?.subCategory
-                    .filter((subCat) => subCat.category._id === cat._id)
+                    .filter((subCat) => {
+                      const hasProducts = productsData?.product.some(
+                        (product) => product.subCategory._id === subCat._id
+                      );
+                      return subCat.category._id === cat._id && hasProducts;
+                    })
                     .map((subCat) => (
                       <li
                         key={subCat._id}
@@ -192,7 +197,7 @@ const ProductPage = () => {
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
                 {productsData?.product.map((product, i) => {
                   const isProductInWishList = wishListProduct.some(
                     (item) => item.pId === product._id
@@ -217,7 +222,7 @@ const ProductPage = () => {
                         <p className="text-gray-700 font-semibold flex justify-between">
                           ${product.price}.00
                           <div>
-                            {isProductInWishList ? (
+                            {/* {isProductInWishList ? (
                               <FaHeart
                                 size={20}
                                 fill="red"
@@ -228,9 +233,21 @@ const ProductPage = () => {
                                 size={20}
                                 onClick={() => handleWishListClick(product._id)}
                               />
-                            )}
+                            )} */}
+
+                            
                           </div>
+                          
                         </p>
+
+                        <button
+                              className={`pt-1 pb-1 px-3 mt-4 text-white  rounded bg-[#f05029] transition-colors duration-300 hover:bg-[#e03e1f]`}
+                              onClick={() => handleWishListClick(product._id)}
+                            >
+                              {isProductInWishList
+                                ? "Remove Wishlish"
+                                : "Add Wishlist"}
+                            </button>
                       </div>
                     </div>
                   );

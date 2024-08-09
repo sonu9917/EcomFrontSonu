@@ -210,17 +210,13 @@ function App() {
         {
           path: "userDetails",
           element: (
-            <ProtectedRoutesForAdmin>
               <UserDetails />
-            </ProtectedRoutesForAdmin>
           ),
         },
         {
           path: "wishList",
           element: (
-            <ProtectedRoutesForAdmin>
               <WishListProduct />
-            </ProtectedRoutesForAdmin>
           ),
         },
         {

@@ -53,15 +53,15 @@ const Home = () => {
       </section>
 
       {/* second section */}
-      <section className="min-h-screen bg-black bg-cover grid backgroundRemove grid-cols-1 lg:grid-cols-2  mx-auto">
-        <div className="flex items-center justify-center  p-8 md:p-0">
+      <section className="bg-black bg-cover grid backgroundRemove grid-cols-1 lg:grid-cols-2  mx-auto">
+        <div className="flex items-center justify-center  mt-[40px]   p-8 md:p-0">
           <img
             src={smallScreenBanner}
             className="mt-5 block lg:hidden"
             alt=""
           />
         </div>
-        <div className="pt-10 px-5">
+        <div className="pt-10 px-5 ">
           <h4 className="text-white font-semibold mb-4 text-lg sm:text-xl md:text-2xl">
             ABOUT US
           </h4>
@@ -87,14 +87,14 @@ const Home = () => {
       </section>
       
       {/* product section */}
-      <section className="bg-black
+      <section className="bg-black 
       ">
-        <div className="container mx-auto">
+        <div className="container mx-auto pt-[50px] pb-[100px]">
           <div className="text-[35px] text-white pl-8  font-extrabold">
             <h1>Find Popular</h1>
             <h1 className="text-[#8B7BCF]">Artwork</h1>
           </div>
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 mt-[60px]">
             <ProductSlider />
           </div>
         </div>
