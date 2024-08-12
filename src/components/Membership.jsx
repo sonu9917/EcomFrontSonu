@@ -29,6 +29,27 @@ const Membership = () => {
 
   const { membershipOptions } = useContext(MainContext)
 
+
+  // user click on upgrade memberhsip button
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
+  const [selectedMembership, setSelectedMembership] = useState('6-month');
+
+  const openUpgradeModal = () => setIsUpgradeModalOpen(true);
+  const closeUpgradeModal = () => setIsUpgradeModalOpen(false);
+
+  const handleUpgrade = () => {
+    console.log(membershipOptions)
+    if (selectedMembership == "6-month") {
+      extendMembership(membershipOptions[0]); // Replace with your actual function
+      closeUpgradeModal();
+    } else if (selectedMembership == "12-month") {
+      extendMembership(membershipOptions[1]); // Replace with your actual function
+      closeUpgradeModal();
+    }
+  };
+
+  console.log(selectedMembership)
+
   // Use effect to get user checkout and filter expiry date
   useEffect(() => {
 
@@ -126,6 +147,8 @@ const Membership = () => {
 
   // Function to extend membership
   const extendMembership = async (membershipOption) => {
+
+    console.log(membershipOption)
     const stripe = await stripePromise;
     setLoading(true);
 
@@ -243,7 +266,7 @@ const Membership = () => {
   // ];
 
   const userSubscription = data?.user?.subscription;
-  console.log(userSubscription)
+  // console.log(userSubscription)
 
   return (
     <div className="mx-auto max-w-[1200px] px-4 md:px-8 lg:px-12">
@@ -257,6 +280,75 @@ const Membership = () => {
 
       {userSubscription ? (
         <>
+
+          <div>
+            {!isMembershipExpired() && (
+              <p className="text-sm text-gray-500 mb-2">
+                {`Your have purchased ${userSubscription} Membership `} <br />
+                Your membership is active and will expire on {new Date(filterCheckoutExpiryDate).toLocaleDateString()}.
+              </p>
+            )}
+
+            {isMembershipExpired() && (
+              <p className="text-sm text-red-500">
+                Your membership has expired. Please renew to continue using the services.
+              </p>
+            )}
+
+
+            <div className="mt-5">
+              {userSubscription === "6-month" && (
+                <div className="flex gap-4 mb-5">
+                  <button onClick={downloadInvoice} className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
+                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                      Download Invoice
+                    </span>
+                  </button>
+                  <button onClick={openUpgradeModal} class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                      Upgrade Membership
+                    </span>
+                  </button>
+
+                  <button onClick={() => setIsCancelModalOpen(true)} className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                      Cancel Membership
+                    </span>
+                  </button>
+
+                </div>
+              )}
+            </div>
+
+            <div className="mt-5">
+              {userSubscription === "12-month" && (
+                <div className="flex gap-4 mb-5">
+
+                  <button onClick={downloadInvoice} className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
+                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                      Download Invoice
+                    </span>
+                  </button>
+
+                  <button onClick={openUpgradeModal} class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                      Upgrade Membership
+                    </span>
+                  </button>
+
+                  <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                      Cancel Membership
+                    </span>
+                  </button>
+                </div>
+              )}
+            </div>
+
+          </div>
+
+
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
             {membershipOptions.map((option, index) => {
               let buttonLabel = "Buy Now";
@@ -340,52 +432,39 @@ const Membership = () => {
             })}
           </div>
 
-          {userSubscription === "6-month" && (
-            <div className="flex gap-4 mb-5">
-              <button
-                onClick={() => setIsCancelModalOpen(true)}
-                className="bg-red-500 text-white py-2 px-4 rounded-md"
-              >
-                Cancel Membership
-              </button>
-              <button
-                onClick={downloadInvoice}
-                className="bg-green-500 text-white py-2 px-4 rounded-md"
-              >
-                Download Invoice
-              </button>
+          {/* Upgrade Membership Modal */}
+          {isUpgradeModalOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+              <div className="bg-white rounded-lg p-6 w-96">
+                <h3 className="text-xl font-semibold mb-4">Choose a Membership</h3>
+                <select
+                  value={selectedMembership}
+                  onChange={(e) => setSelectedMembership(e.target.value)}
+                  className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
+                >
+                  <option value="" disabled>Select membership type</option>
+                  <option value="6-month">6-Month Membership</option>
+                  <option value="12-month">12-Month Membership</option>
+                  {/* Add more options as needed */}
+                </select>
+                <div className="flex justify-end">
+                  <button
+                    onClick={handleUpgrade}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg"
+                  >
+                    Upgrade Membership
+                  </button>
+                  <button
+                    onClick={closeUpgradeModal}
+                    className="ml-2 px-4 py-2 bg-gray-300 rounded-lg"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
             </div>
           )}
 
-          {userSubscription === "12-month" && (
-            <div className="flex gap-4 mb-5">
-              <button
-                onClick={() => setIsCancelModalOpen(true)}
-                className="bg-red-500 text-white py-2 px-4 rounded-md"
-              >
-                Cancel Membership
-              </button>
-              <button
-                onClick={downloadInvoice}
-                className="bg-green-500 text-white py-2 px-4 rounded-md"
-              >
-                Download Invoice
-              </button>
-            </div>
-          )}
-
-          {!isMembershipExpired() && (
-            <p className="text-sm text-gray-500 mb-2">
-              {`Your have purchased ${userSubscription} Membership `} <br />
-              Your membership is active and will expire on {new Date(filterCheckoutExpiryDate).toLocaleDateString()}.
-            </p>
-          )}
-
-          {isMembershipExpired() && (
-            <p className="text-sm text-red-500">
-              Your membership has expired. Please renew to continue using the services.
-            </p>
-          )}
         </>
       ) : (
         <div>
@@ -442,6 +521,9 @@ const Membership = () => {
               </div>
             ))}
           </div>
+
+
+
         </div>
       )}
 

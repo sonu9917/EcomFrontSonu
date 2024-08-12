@@ -21,7 +21,7 @@ const Context = (props) => {
       name: "12-Months Membership",
       price: 9000,
       key: "12-month",
-      PriceId: "price_1PjEjZ2K1YkP5vT5ZkVbBQVm",
+      PriceId: "price_1PjEkQ2K1YkP5vT5j2OjdI8t",
     },
   ];
 
