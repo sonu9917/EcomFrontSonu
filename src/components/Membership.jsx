@@ -323,15 +323,18 @@ const Membership = () => {
                       <b>Unlimited</b> Products
                     </p>
                   </div>
-                  <button
-                    className={`w-full py-2 px-4 rounded-lg ${buttonLabel === "Cancel Membership"
-                      ? "bg-red-500 text-white"
-                      : "bg-blue-500 text-white"
-                      }`}
-                    onClick={onClickHandler}
-                  >
-                    {buttonLabel}
-                  </button>
+                  <div className="flex justify-center">
+
+                    <button
+                      className={`w-[250px] py-3 px-4 ${buttonLabel === "Cancel Membership"
+                        ? "bg-red-500 text-white"
+                        : "bg-[#F05025] text-white"
+                        }`}
+                      onClick={onClickHandler}
+                    >
+                      {buttonLabel}
+                    </button>
+                  </div>
                 </div>
               );
             })}
@@ -400,15 +403,21 @@ const Membership = () => {
                 </div>
                 <div className="text-center p-4 md:p-8 text-[#2E2E2E] flex flex-col gap-5">
                   <p>
-                    <b>A free Registration</b> enables access to Members-only
-                    articles.
+                    A free Registration enables access to vendor’s contact details and the addition of products to a wish list.
                   </p>
                   <p>
-                    Membership provides full access to all website features.
+                    A paid Membership enables Members to create and advertise an unlimited number of products, Member’s profiles and their contact details during the duration of the chosen Membership term.
                   </p>
                   <p>
-                    A portion of all membership fees will be utilized for the
-                    marketing and enhancement of the website and its content.
+
+                    Each individual advertisement is limited to 5 images but has no restrictions on text.
+                  </p>
+                  <p>
+
+                    Given that no commission is required on any sales, members are responsible for negotiating all transactions, coordinating payments, and arranging shipping with buyers directly.
+                  </p>
+                  <p>
+                    A portion of all membership fees will be utilized for the marketing and enhancement of the website and its content.
                   </p>
                   <p>
                     <b>
@@ -421,12 +430,15 @@ const Membership = () => {
                   </p>
                 </div>
 
-                <button
-                  className="w-full py-2 px-4 rounded-lg bg-blue-500 text-white"
-                  onClick={() => makePayment(option)}
-                >
-                  Buy Now
-                </button>
+                <div className="flex justify-center">
+                  <button
+                    className="w-[250px] py-3 px-4  bg-[#F05025] text-white"
+                    onClick={() => makePayment(option)}
+                  >
+                    Buy Now
+                  </button>
+                </div>
+
               </div>
             ))}
           </div>
