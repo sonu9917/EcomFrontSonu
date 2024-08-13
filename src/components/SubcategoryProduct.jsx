@@ -4,6 +4,7 @@ import { useGetProductsByCategoryAndSubcategoryQuery } from '../redux/productSli
 import { useDispatch } from 'react-redux';
 import { addToWishList, removeFromWishList } from '../redux/wishListSlice';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import NoProductFound from './NoProductFound';
 
 const SubcategoryProduct = () => {
   const { categoryId, subcategoryId } = useParams();
@@ -53,7 +54,7 @@ const SubcategoryProduct = () => {
   const subCategoryName = products?.product[0]?.subCategory?.subCategory || '';
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="max-w-[1240px] mx-auto px-4 pb-5">
       {isLoading ? (
         <p className="text-center text-gray-500">Loading...</p>
       ) : error ? (
@@ -61,8 +62,8 @@ const SubcategoryProduct = () => {
       ) : (
         <>
           {products?.product.length === 0 ? (
-            <div className="text-center text-gray-700 text-xl py-10">
-              No products found.
+            <div className="text-center text-gray-700 text-xl pb-5">
+              <NoProductFound/>
             </div>
           ) : (
             <>
@@ -97,11 +98,11 @@ const SubcategoryProduct = () => {
                       </div>
 
                       <div className="flex flex-col gap-2">
-                        <h2 className='mt-2 text-gray-400'>{categoryName}</h2>
-                        <h3 className="text-lg  font-medium text-[#3a3c3c]">
+                        <h2 className='mt-2 text-gray-400 text-[14px]'>{categoryName}</h2>
+                        <h3 className="text-xl  font-medium text-[#3a3c3c]">
                           {product.name}
                         </h3>
-                        <p className="text-gray-700 text-lg font-medium flex justify-between">
+                        <p className="text-gray-700 text-xl font-medium flex justify-between">
                           ${product.price}
                         </p>
                         <button

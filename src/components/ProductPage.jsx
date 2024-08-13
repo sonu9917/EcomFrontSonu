@@ -205,7 +205,7 @@ const ProductPage = () => {
                   return (
                     <div
                       key={i}
-                      className="border rounded-lg overflow-hidden shadow-lg cursor-pointer transition-transform transform hover:scale-105"
+                      className="border rounded-lg overflow-hidden shadow-lg cursor-pointer"
                     >
                       <img
                         src={

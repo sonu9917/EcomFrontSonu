@@ -45,6 +45,8 @@ const Breadcrumbs = () => {
     '/about',
     `/checkout/success/${sessionId}/key/${key}`,
     '/terms-and-condition',
+    '/register',
+    '/login'
   ];
 
   if (excludedPaths.includes(location.pathname)) {
@@ -52,7 +54,7 @@ const Breadcrumbs = () => {
   }
 
   return (
-    <nav aria-label="breadcrumb" className="my-4 max-w-[1200px] mx-auto">
+    <nav aria-label="breadcrumb" className="my-10 max-w-[1200px] mx-auto">
       <ol className="flex text-sm text-gray-500">
         <li className="flex items-center">
           <Link to="/" className="text-blue-600 hover:underline">Home</Link>
@@ -85,7 +87,7 @@ const Breadcrumbs = () => {
           }
 
           return isLast ? (
-            <li key={to} className="flex items-center text-gray-700">
+            <li key={to} className="flex items-center  text-gray-700">
               {displayName}
             </li>
           ) : (

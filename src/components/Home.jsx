@@ -14,7 +14,7 @@ const Home = () => {
     <>
       {/* first section */}
       <section
-        className="bg-no-repeat bg-cover -mt-1 flex justify-center items-center"
+        className="bg-no-repeat h-[628px] bg-cover -mt-1 flex justify-center items-center"
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundPosition: "center center",
@@ -53,7 +53,7 @@ const Home = () => {
       </section>
 
       {/* second section */}
-      <section className="bg-black bg-cover grid backgroundRemove grid-cols-1 lg:grid-cols-2  mx-auto">
+      <section className="bg-black bg-cover grid pt-20 backgroundRemove grid-cols-1 lg:grid-cols-2  mx-auto">
         <div className="flex items-center justify-center  mt-[40px]   p-8 md:p-0">
           <img
             src={smallScreenBanner}
@@ -89,7 +89,7 @@ const Home = () => {
       {/* product section */}
       <section className="bg-black 
       ">
-        <div className="container mx-auto pt-[50px] pb-[100px]">
+        <div className="container mx-auto max-w-[1300px] pt-[50px] pb-[100px]">
           <div className="text-[35px] text-white pl-8  font-extrabold">
             <h1>Find Popular</h1>
             <h1 className="text-[#8B7BCF]">Artwork</h1>

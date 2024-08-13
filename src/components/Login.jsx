@@ -47,9 +47,9 @@ const Login = () => {
       {loading && <Loader />} {/* Show the loader if loading */}
       <section className="bg-[#F5F5F5] border">
         <div className="w-full mt-20 mb-20 flex justify-center px-4">
-          <div className="w-full max-w-lg lg:max-w-2xl h-full shadow-2xl pb-24">
-            <div className="text-[#f05025] pt-7 text-center font-bold text-2xl lg:text-3xl">
-              <h1>Login Here</h1>
+          <div className="w-full max-w-lg bg-white rounded-2xl lg:max-w-[800px] p-[50px]  h-full shadow-2xl pb-24">
+            <div className="text-[#EF9364] pt-7 text-center font-bold text-2xl lg:text-3xl">
+              <h1 style={{textTransform:"uppercase"}}>Login</h1>
             </div>
             <form className="mt-4 mb-3 px-4" onSubmit={handleSubmit}>
               <div className="mt-3">
@@ -64,7 +64,7 @@ const Login = () => {
                   type="email"
                   id="email"
                   name="email"
-                  className="border py-3 px-4 w-full"
+                  className="border py-3 px-4 w-full mt-[10px]"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
@@ -82,13 +82,13 @@ const Login = () => {
                   type="password"
                   id="password"
                   name="password"
-                  className="border py-3 px-4 w-full"
+                  className="border py-3 px-4 w-full mt-[10px]"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
               </div>
 
-              <button type="submit" className="text-white rounded py-3 px-6 bg-rose-500 mt-5">
+              <button type="submit" className="text-white rounded py-3 px-6 bg-[#EF9364] mt-5">
                 Login
               </button>
 

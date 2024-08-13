@@ -28,7 +28,7 @@ const Navbar = () => {
     <>
       <div className="bg-[#8B7BCF] ">
         {/* Header part */}
-        <div className="h-11 hidden lg:flex pl-5 text-[12px] max-w-[1500px] mx-auto text-white items-center justify-between">
+        <div className="h-11 hidden lg:flex pl-5 text-[12px] max-w-[1300px] mx-auto text-white items-center justify-between">
           <p>
             This is where New Zealand’s Artists and Artisans meet Connoisseurs
             of fine art and craftsmanship
@@ -55,10 +55,10 @@ const Navbar = () => {
 
       <div className="bg-[#110f0f] relative">
         {/* Menu part */}
-        <div className="h-20 flex items-center max-w-[1500px] lg:pr-4 mx-auto justify-between px-5 md:px-28 w-full">
+        <div className="h-20 flex items-center max-w-[1300px] lg:pr-4 mx-auto justify-between px-5 md:px-28 w-full">
           {/* Logo section */}
           <Link to='/'>
-            <img src={logo} alt="Logo" width={150} className="cursor-pointer" />
+            <img src={logo} alt="Logo" width={190} className="cursor-pointer" />
           </Link>
 
           {/* Search bar */}
