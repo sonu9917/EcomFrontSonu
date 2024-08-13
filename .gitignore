@@ -8,7 +8,6 @@ yarn-error.log
 .env.*
 
 # Build output
-src/
 coverage/
 *.tgz
 
@@ -85,3 +84,5 @@ coverage/
 
 # Optional eslint cache
 .eslintcache
+
+
