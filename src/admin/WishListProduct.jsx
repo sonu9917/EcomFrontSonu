@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useGetSingleProductQuery } from '../redux/productSlice';
 import WishList from './WishList';
+import { MainContext } from '../context/Context';
 
 const WishListProduct = () => {
     const [wishListProduct, setWishListProduct] = useState([]);
+    const { setActive } = useContext(MainContext)
 
     useEffect(() => {
         const lsData = localStorage.getItem('wishList');
         setWishListProduct(JSON.parse(lsData) || []);
     }, []);
 
-    console.log(wishListProduct);
+    // console.log(wishListProduct);
+
+    useEffect(() => {
+        setActive("My WishList")
+    }, [])
 
     return (
         <div className="container mx-auto mt-10">

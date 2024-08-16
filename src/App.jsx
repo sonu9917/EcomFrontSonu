@@ -79,8 +79,8 @@ function App() {
             </ProtectedRoutesForWithOutLogin>
         },
         {
-          path:"/membershipPage",
-          element:<WithoutLoginMembershipPage/>
+          path: "/membershipPage",
+          element: <WithoutLoginMembershipPage />
         },
         {
           path: "/shop",
@@ -156,9 +156,7 @@ function App() {
         {
           path: "productList",
           element: (
-            <ProtectedRoutesForAdmin>
               <ProductList />
-            </ProtectedRoutesForAdmin>
           ),
         },
         {
@@ -186,7 +184,7 @@ function App() {
         },
         {
           path: "editCategory/:id",
-          element: <EditCategory/>,
+          element: <EditCategory />,
         },
         {
           path: "sub-categoryList",
@@ -207,69 +205,67 @@ function App() {
         {
           path: "refer",
           element: (
-            <ProtectedRoutesForAdmin>
               <ReferralLink />
-            </ProtectedRoutesForAdmin>
           ),
         },
         {
           path: "userDetails",
           element: (
-              <UserDetails />
+            <UserDetails />
           ),
         },
         {
           path: "wishList",
           element: (
-              <WishListProduct />
+            <WishListProduct />
           ),
         },
         {
           path: "visitStore",
           element: (
-            <ProtectedRoutesForAdmin>
-              <VisitStore />
-            </ProtectedRoutesForAdmin>
+
+            <VisitStore />
+
           ),
         },
         {
           path: "settings/payment",
           element: (
-            <ProtectedRoutesForAdmin>
-              <PaymentMethods/>
-            </ProtectedRoutesForAdmin>
+
+            <PaymentMethods />
+
           ),
         },
         {
           path: "settings/shipping",
           element: (
-            <ProtectedRoutesForAdmin>
-              <ShippingSettings/>
-            </ProtectedRoutesForAdmin>
+
+            <ShippingSettings />
+
           ),
         },
         {
           path: "settings/social-profile",
           element: (
-            <ProtectedRoutesForAdmin>
-              <SocialLinks/>
-            </ProtectedRoutesForAdmin>
+
+            <SocialLinks />
+
           ),
         },
         {
           path: "settings/store-seo",
           element: (
-            <ProtectedRoutesForAdmin>
-              <StoreSeo/>
-            </ProtectedRoutesForAdmin>
+
+            <StoreSeo />
+
           ),
         },
         {
           path: "settings/store",
           element: (
-            <ProtectedRoutesForAdmin>
-              <AddStore/>
-            </ProtectedRoutesForAdmin>
+
+            <AddStore />
+
           ),
         },
       ],

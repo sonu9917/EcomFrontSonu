@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useGetUserDetailsQuery } from "../redux/productSlice";
+import { MainContext } from "../context/Context";
 
 const ReferralLink = () => {
   // Fetch user details using custom query hook
   const { data } = useGetUserDetailsQuery();
+
+  const {setActive} = useContext(MainContext)
 
   // State to manage copy button text
   const [copySuccess, setCopySuccess] = useState(false);
@@ -28,6 +31,10 @@ const ReferralLink = () => {
       }, 2000);
     });
   };
+
+  useEffect(() => {
+    setActive("Share to friend")
+}, [])
 
   return (
     <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md">

@@ -63,18 +63,18 @@ const NewsLetter = () => {
           <h1 className="text-2xl md:text-3xl lg:text-[30px] font-semibold">
             Subscribe To <span className="text-[#F05025]">Our Newsletter</span>
           </h1>
-          <p className="text-sm md:text-base lg:text-lg w-full">
+          <p className="text-sm md:text-base w-full">
             Join our newsletter, so that we reach out to you with our best
             services and offers.
           </p>
 
           {/* Form Submission */}
-          <form onSubmit={handleSubmit} className="flex flex-row gap-2 w-full items-center">
+          <form onSubmit={handleSubmit} className="flex flex-row gap-3 w-full items-center">
             <input
               type="email"
               id="helper-text"
               aria-describedby="helper-text-explanation"
-              className="flex-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="flex-1 bg-gray-50 border xl:w-[630px] placeholder:pl-4 border-gray-300 text-gray-900 text-sm rounded-sm"
               placeholder="name@flowbite.com"
               value={email}
               onChange={handleEmailChange}
@@ -86,7 +86,7 @@ const NewsLetter = () => {
             />
             <button
               type="submit"
-              className="flex-shrink-0 focus:outline-none text-white bg-[#f05025]  focus:ring-4 focus:ring-purple-300 font-bold text-sm p-2.5 rounded"
+              className="flex-shrink-0 text-white bg-[#f05025] font-bold text-sm p-2.5 rounded-sm"
               style={{
                 height: '50px',
                 minWidth: '120px', // Fixed width for the button

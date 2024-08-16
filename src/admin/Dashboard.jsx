@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useGetAdminProductQuery, } from "../redux/productSlice";
+import { MainContext } from "../context/Context";
 
 const Dashboard = () => {
   const { data } = useGetAdminProductQuery();
+
+  const {setActive} = useContext(MainContext)
+
+  useEffect(()=>{
+    setActive("Dashboard")
+  },[])
 
   return (
     <div>

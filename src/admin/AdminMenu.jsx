@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 import { useGetUserDetailsQuery } from "../redux/productSlice";
 
 const AdminMenu = ({ onMenuItemClick }) => {
-  const [active, setActive] = useState("Dashboard");
+  // const [active, setActive] = useState("Dashboard");
+  const {active,setActive} = useContext(MainContext)
   const [hovered, setHovered] = useState(null);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 

@@ -7,6 +7,7 @@ import aboutSecondImage from './about-second-image.jpg'
 import newsLetterBg from './bg.jpg'
 import banner2 from './banner-2.png'
 import noProduct from './noProduct.png'
+import payple from './payple logo.png'
 
 export {
     backgroundImage,
@@ -16,5 +17,6 @@ export {
     aboutSecondImage,
     newsLetterBg,
     banner2,
-    noProduct
+    noProduct,
+    payple
   };

@@ -168,14 +168,14 @@ const Navbar = () => {
               </li>
               {cookie.token ? (
                 <>
-                  {/* <li>
+                  <li>
                     <Link
-                      to="/admin/addProduct"
+                      to="/admin/productList"
                       className="hover:text-[#ef9364] transition-all"
                     >
                       Create a Listing
                     </Link>
-                  </li> */}
+                  </li>
                   <li>
                     <Link
                       to="/admin/dashboard"

@@ -37,3 +37,76 @@ body {
   max-width: 580px !important;
   height: 550px !important;
 }
+
+
+
+.storeaddform{border: 4px dashed #d8d8d8;
+  margin: 0 auto 38px;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  min-height: 255px;
+  width: 621px;
+  padding-top: 50px;
+}
+
+
+.storeaddform label {
+  cursor: pointer;
+  margin-top: 1rem;
+  color: #FFFFFF !important;
+  background-color: #F05025 !important;
+  border-color: #DA502B !important;
+  padding: 12px 23px;
+  line-height: 1.42857143;
+  border-radius: 3px;
+  font-size: 21px;
+}
+
+
+.storeaddform2 label {
+  cursor: pointer;
+  margin-top: 1rem;
+  color: #FFFFFF !important;
+  background-color: #F05025 !important;
+  border-color: #DA502B !important;
+  padding: 6px 13px;
+  line-height: 1.42857143;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+
+
+.storeaddform p {
+  font-size: 12px;
+  color: #b1b1b1;
+  padding-top: 16px;
+}
+
+.storeaddform #file-chosen{
+  margin-left: 0.3rem;
+  font-family: sans-serif;
+}
+
+.customFormDiv{width: 100%; display:inline-block;text-align: center;}
+.customFormDiv form{width: 77%; display:inline-block;text-align: center;}
+.customFormStore label {
+  font-size: 14px;
+  color: #111827;
+  font-weight: bold;
+}
+.customFormStore input {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  width: 65%;
+  padding: 11px 16px;
+  border-radius: 4px;
+}
+.customFormStore .editerbio {width: 65%;}
+
+  .customFormStore .rsw-editor {min-height: 450px!important;}
+
+  .customFormStore textarea {width: 65%;}

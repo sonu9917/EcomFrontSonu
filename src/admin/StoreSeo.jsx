@@ -32,16 +32,17 @@ const StoreSeo = () => {
 
   return (
     <div className="container mx-auto p-8">
-      <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-        <div className="p-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-center rounded-t-lg">
-          <h2 className="text-2xl font-semibold">Store SEO Settings</h2>
-          <p className="mt-2 text-lg">Enhance your store's online presence</p>
+      <div className="max-w-3xl mx-auto bg-white  overflow-hidden">
+        <div className='flex items-center gap-4 font-bold mb-4  border-b-[1px] pb-4'>
+          <span className='text-[24px] pt-[13px] '>Store SEO</span> <span className='text-[80%] pt-3'>→</span> <span className='text-[#F05025] pt-3 text-[19px] cursor-pointer'>Visit Store</span>
         </div>
 
+
+      <div className="customFormDiv">
         <form className="p-6" onSubmit={handleSubmit}>
           {/* SEO Title */}
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="seoTitle">
+          <div className="mb-4 customFormStore flex items-center gap-4">
+            <label className="block w-40 text-gray-700 text-sm font-bold mb-2" htmlFor="seoTitle">
               SEO Title
             </label>
             <input
@@ -56,8 +57,8 @@ const StoreSeo = () => {
           </div>
 
           {/* Meta Description */}
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="metaDescription">
+          <div className="mb-4 customFormStore flex items-center gap-4">
+            <label className="block w-40 text-gray-700 text-sm font-bold mb-2" htmlFor="metaDescription">
               Meta Description
             </label>
             <textarea
@@ -72,8 +73,8 @@ const StoreSeo = () => {
           </div>
 
           {/* Meta Keywords */}
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="metaKeywords">
+          <div className="mb-4 customFormStore flex items-center gap-4">
+            <label className="block w-40 text-gray-700 text-sm font-bold mb-2" htmlFor="metaKeywords">
               Meta Keywords
             </label>
             <input
@@ -88,8 +89,8 @@ const StoreSeo = () => {
           </div>
 
           {/* Facebook Title */}
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="facebookTitle">
+          <div className="mb-4 customFormStore flex items-center gap-4">
+            <label className="block w-40 text-gray-700 text-sm font-bold mb-2" htmlFor="facebookTitle">
               Facebook Title
             </label>
             <input
@@ -104,8 +105,8 @@ const StoreSeo = () => {
           </div>
 
           {/* Facebook Description */}
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="facebookDescription">
+          <div className="mb-4 customFormStore flex items-center gap-4">
+            <label className="block w-40 text-gray-700 text-sm font-bold mb-2" htmlFor="facebookDescription">
               Facebook Description
             </label>
             <textarea
@@ -120,8 +121,8 @@ const StoreSeo = () => {
           </div>
 
           {/* Facebook Image */}
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="facebookImage">
+          <div className="mb-4 customFormStore flex items-center gap-4">
+            <label className="block w-40 text-gray-700 text-sm font-bold mb-2" htmlFor="facebookImage">
               Facebook Image URL
             </label>
             <input
@@ -136,8 +137,8 @@ const StoreSeo = () => {
           </div>
 
           {/* Twitter Title */}
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="twitterTitle">
+          <div className="mb-4 customFormStore flex items-center gap-4">
+            <label className="block w-40 text-gray-700 text-sm font-bold mb-2" htmlFor="twitterTitle">
               Twitter Title
             </label>
             <input
@@ -152,8 +153,8 @@ const StoreSeo = () => {
           </div>
 
           {/* Twitter Description */}
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="twitterDescription">
+          <div className="mb-4 customFormStore flex items-center gap-4">
+            <label className="block w-40 text-gray-700 text-sm font-bold mb-2" htmlFor="twitterDescription">
               Twitter Description
             </label>
             <textarea
@@ -168,8 +169,8 @@ const StoreSeo = () => {
           </div>
 
           {/* Twitter Image */}
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="twitterImage">
+          <div className="mb-4 customFormStore flex items-center gap-4">
+            <label className="block w-40 text-gray-700 text-sm font-bold mb-2" htmlFor="twitterImage">
               Twitter Image URL
             </label>
             <input
@@ -184,15 +185,19 @@ const StoreSeo = () => {
           </div>
 
           {/* Save Changes Button */}
-          <div className="flex justify-center">
+          <div className="flex justify-start ml-44">
             <button
               type="submit"
-              className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-6 py-2 bg-[#F05025]  text-white font-bold"
             >
               Save Changes
             </button>
           </div>
         </form>
+      </div>
+
+
+
       </div>
     </div>
   );

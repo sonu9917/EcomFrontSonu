@@ -21,7 +21,7 @@ const ProductPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterVisible, setFilterVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12; // Number of items per page
+  const itemsPerPage = 9; // Number of items per page
 
   // Fetch products based on category, subcategory, search query, and pagination
   const {
@@ -212,7 +212,7 @@ const ProductPage = () => {
                           product.images[0]
                         }
                         alt={product.name}
-                        className="w-full h-48 object-cover"
+                        className="w-full h-[295px] object-cover"
                         onClick={() => navigate(`/shop/${product._id}`)}
                       />
                       <div className="p-4 text-center">
@@ -224,7 +224,7 @@ const ProductPage = () => {
                         </p>
 
                         <button
-                          className={`pt-1 pb-1 px-3 mt-3 text-white  rounded bg-[#f05029] transition-colors duration-300 hover:bg-[#e03e1f]`}
+                          className={`pt-1 pb-1 px-3 mt-1 text-white  rounded bg-[#f05029] transition-colors duration-300 hover:bg-[#e03e1f]`}
                           onClick={() => handleWishListClick(product._id)}
                         >
                           {isProductInWishList

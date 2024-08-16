@@ -54,7 +54,7 @@ const Breadcrumbs = () => {
   }
 
   return (
-    <nav aria-label="breadcrumb" className="my-10 max-w-[1200px] mx-auto">
+    <nav aria-label="breadcrumb" className="my-10 max-w-[1100px] mx-auto">
       <ol className="flex text-sm text-gray-500">
         <li className="flex items-center">
           <Link to="/" className="text-blue-600 hover:underline">Home</Link>
@@ -92,7 +92,9 @@ const Breadcrumbs = () => {
             </li>
           ) : (
             <li key={to} className="flex items-center">
-              <Link to={to} className="text-blue-600 hover:underline">
+              <Link to={to} className="text-blue-600 hover:underline" style={{
+                textTransform:'capitalize'
+              }}>
                 {displayName}
               </Link>
               <svg

@@ -53,6 +53,15 @@ export const api = createApi({
       query: () => `/auth/getUserDetails`,
     }),
 
+    // update user details
+    updateUserDetails: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/auth/updateUserDetails/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
+
     // get all category
     getCategory: builder.query({
       query: () => `/category/getCategory`,
@@ -183,5 +192,7 @@ export const {
   useGetSingleCategoryQuery,
   useDeleteSubCategoryMutation,
   useGetSingleSubCategoryQuery,
-  useUpdateSubCategoryMutation
+  useUpdateSubCategoryMutation,
+  useUpdateUserDetailsMutation
+  
 } = api;

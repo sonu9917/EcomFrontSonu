@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FaRegUserCircle } from 'react-icons/fa';
 import axios from '../axiosConfig';
 import ProductList from './ProductList';
+import NoStoreFound from './NoStoreFound';
 
 const VisitStore = () => {
   const [store, setStore] = useState(null); // Initialize with null for better handling
@@ -25,9 +26,7 @@ const VisitStore = () => {
 
   if (!store) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-gray-600 text-xl">Loading...</p>
-      </div>
+      <NoStoreFound/>
     );
   }
 

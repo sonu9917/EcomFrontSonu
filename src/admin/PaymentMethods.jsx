@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { FaPlus, FaRegEdit } from 'react-icons/fa';
+import { IoMdArrowDropdown } from "react-icons/io";
+import { payple } from '../assets'
+import { useNavigate } from 'react-router-dom';
 
 const PaymentMethods = () => {
   const [showAddPayment, setShowAddPayment] = useState(false);
@@ -7,6 +10,7 @@ const PaymentMethods = () => {
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [currentEmail, setCurrentEmail] = useState('');
   const [editIndex, setEditIndex] = useState(null);
+
 
   // Retrieve payment methods from local storage on initial render
   useEffect(() => {
@@ -18,7 +22,7 @@ const PaymentMethods = () => {
 
   // Save payment methods to local storage whenever they change
   useEffect(() => {
-    if(paymentMethods.length != 0){
+    if (paymentMethods.length != 0) {
       localStorage.setItem('paymentMethods', JSON.stringify(paymentMethods));
     }
   }, [paymentMethods]);
@@ -64,42 +68,65 @@ const PaymentMethods = () => {
     setCurrentEmail('');
   };
 
-  return (
-    <div className="bg-white rounded-lg shadow-md p-6 max-w-lg mx-auto">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Payment Methods</h2>
+  const navigate = useNavigate()
 
-      {/* Add Payment Method Button */}
-      <div className="flex justify-between items-center mb-6">
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full flex items-center transition-colors duration-300 ease-in-out"
-          onClick={toggleAddPayment}
-        >
-          <FaPlus className="mr-2" />
-          Add Payment Method
-        </button>
+  return (
+    <div>
+
+      <div className='flex items-center gap-4 font-bold'>
+        <span className='text-[24px] pt-[13px] '>Payment Method</span> <span className='text-[80%] pt-3'>→</span> <span className='text-[#F05025] pt-3 text-[19px] cursor-pointer'>Visit Store</span>
       </div>
 
-      {/* PayPal Button */}
-      {showAddPayment && (
-        <div className="bg-gray-100 p-4 rounded-md mb-6">
+      <div className='mt-8 mb-4 text-[#888]'>
+        These are the withdraw methods available for you. Please update your payment information below to submit withdraw requests and get your store payments seamlessly.
+      </div>
+
+      <div className="bg-[#EEEEEE] p-4 h-[80px] flex justify-between items-center">
+        <h2 className="text-2xl font-bold  text-gray-800">Payment Methods</h2>
+
+        {/* Add Payment Method Button */}
+        <div className="flex justify-between items-center ">
           <button
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full flex items-center transition-colors duration-300 ease-in-out w-full justify-center"
-            onClick={() => toggleEmailPopup()}
+            className="bg-[#DDDDDD] relative  font-bold gap-4 py-2 px-2 flex items-center justify-between"
+            onClick={toggleAddPayment}
           >
-            <img
-              src="https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif"
-              alt="PayPal"
-              className="mr-2 w-6 h-6"
-            />
-            Add PayPal Account
+            <div>
+              <p className='pl-2 text-sm  text-[#333333]'>Add Payment Method</p>
+            </div>
+            <div>
+              <IoMdArrowDropdown className="text-xl mr-2" />
+            </div>
+
+            {/* PayPal Button */}
+
+            {showAddPayment && (
+              <div className="bg-white-100  absolute top-full -left-10 p-2 bg-white border-2 border-black">
+                <button
+                  className="font-bold text-[#333333]  py-2 px-6  flex items-center  justify-center"
+                  onClick={() => toggleEmailPopup()}
+                >
+                  <img
+                    src="https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif"
+                    alt="PayPal"
+                    className="mr-2 w-6 h-6"
+                  />
+                  Direct to Payple
+                </button>
+              </div>
+            )}
+
           </button>
+
+
         </div>
-      )}
+      </div>
+
+
 
       {/* List of Payment Methods */}
       <div>
         {paymentMethods.length === 0 ? (
-          <p className="text-gray-500 text-center">There is no payment method to show.</p>
+          <p className="text-gray-500 mt-5">There is no payment method to show.</p>
         ) : (
           <ul className="space-y-4">
             {paymentMethods.map((email, index) => (
@@ -107,9 +134,13 @@ const PaymentMethods = () => {
                 key={index}
                 className="flex justify-between items-center bg-gray-100 p-3 rounded-md"
               >
-                <span className="text-gray-700">{email}</span>
+
+                <div className='flex'>
+                  <img src={payple} className='w-10' alt="" />
+                  <span className="text-gray-700">({email})</span>
+                </div>
                 <button
-                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded-full inline-flex items-center transition-colors duration-300 ease-in-out"
+                  className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4  inline-flex items-centert"
                   onClick={() => toggleEmailPopup(index)}
                 >
                   <FaRegEdit className="mr-1" />
@@ -150,6 +181,7 @@ const PaymentMethods = () => {
           </div>
         </div>
       )}
+
     </div>
   );
 };

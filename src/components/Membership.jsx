@@ -27,18 +27,21 @@ const Membership = () => {
 
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
-  const { membershipOptions } = useContext(MainContext)
+  const { membershipOptions,setActive } = useContext(MainContext);
 
+  useEffect(()=>{
+    setActive("Subscription")
+  },[])
 
   // user click on upgrade memberhsip button
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
-  const [selectedMembership, setSelectedMembership] = useState('6-month');
+  const [selectedMembership, setSelectedMembership] = useState("6-month");
 
   const openUpgradeModal = () => setIsUpgradeModalOpen(true);
   const closeUpgradeModal = () => setIsUpgradeModalOpen(false);
 
   const handleUpgrade = () => {
-    console.log(membershipOptions)
+    console.log(membershipOptions);
     if (selectedMembership == "6-month") {
       extendMembership(membershipOptions[0]); // Replace with your actual function
       closeUpgradeModal();
@@ -48,14 +51,13 @@ const Membership = () => {
     }
   };
 
-  console.log(selectedMembership)
+  console.log(selectedMembership);
 
   // Use effect to get user checkout and filter expiry date
   useEffect(() => {
-
     const userId = data?.user?._id;
 
-    console.log(userId)
+    console.log(userId);
 
     if (!userId) {
       console.error("User ID is not defined.");
@@ -75,8 +77,6 @@ const Membership = () => {
       console.log("No checkout records found for this user.");
       setFilterCheckoutExpiryDate("");
     }
-
-
   }, [checkout, data]);
 
   // Use effect to refetch data on location change
@@ -147,8 +147,7 @@ const Membership = () => {
 
   // Function to extend membership
   const extendMembership = async (membershipOption) => {
-
-    console.log(membershipOption)
+    console.log(membershipOption);
     const stripe = await stripePromise;
     setLoading(true);
 
@@ -157,7 +156,7 @@ const Membership = () => {
         items: membershipOption,
         extend: true,
         currentExpiryDate: filterCheckoutExpiryDate,
-        userId: data.user._id
+        userId: data.user._id,
       });
 
       const sessionId = response.data.sessionId;
@@ -277,77 +276,86 @@ const Membership = () => {
         Membership
       </h1>
 
-
       {userSubscription ? (
         <>
-
           <div>
             {!isMembershipExpired() && (
               <p className="text-sm text-gray-500 mb-2">
                 {`Your have purchased ${userSubscription} Membership `} <br />
-                Your membership is active and will expire on {new Date(filterCheckoutExpiryDate).toLocaleDateString()}.
+                Your membership is active and will expire on{" "}
+                {new Date(filterCheckoutExpiryDate).toLocaleDateString()}.
               </p>
             )}
 
             {isMembershipExpired() && (
               <p className="text-sm text-red-500">
-                Your membership has expired. Please renew to continue using the services.
+                Your membership has expired. Please renew to continue using the
+                services.
               </p>
             )}
 
-
             <div className="mt-5">
               {userSubscription === "6-month" && (
-                <div className="flex gap-4 mb-5">
-                  <button onClick={downloadInvoice} className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
-                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                      Download Invoice
-                    </span>
-                  </button>
-                  <button onClick={openUpgradeModal} class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                <div className="flex gap-4 mb-5 justify-between">
+                  <div className="">
+                    <button
+                      onClick={openUpgradeModal}
+                      class="px-4 py-2 bg-orange-500 text-white font-semibold"
+                    >
                       Upgrade Membership
-                    </span>
-                  </button>
+                    </button>
 
-                  <button onClick={() => setIsCancelModalOpen(true)} className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                    <button
+                      onClick={() => setIsCancelModalOpen(true)}
+                      className="px-4 py-2 bh-white text-red-500 font-semibold"
+                    >
                       Cancel Membership
-                    </span>
-                  </button>
+                    </button>
+                  </div>
 
+                  <div>
+                    <button
+                      onClick={downloadInvoice}
+                      className="px-5 py-2 bg-green-500 mr-5 text-white font-semibold"
+                    >
+                      Download Invoice
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
 
             <div className="mt-5">
               {userSubscription === "12-month" && (
-                <div className="flex gap-4 mb-5">
-
-                  <button onClick={downloadInvoice} className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
-                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                      Download Invoice
-                    </span>
-                  </button>
-
-                  <button onClick={openUpgradeModal} class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                <div className="flex gap-4 mb-5 justify-between">
+                  <div className="">
+                    <button
+                      onClick={openUpgradeModal}
+                      class="px-4 py-2 bg-orange-500 text-white font-semibold"
+                    >
                       Upgrade Membership
-                    </span>
-                  </button>
+                    </button>
 
-                  <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                    <button
+                      onClick={() => setIsCancelModalOpen(true)}
+                      className="px-4 py-2 bh-white text-red-500 font-semibold"
+                    >
                       Cancel Membership
-                    </span>
-                  </button>
+                    </button>
+                  </div>
+
+                  <div>
+                    <button
+                      onClick={downloadInvoice}
+                      className="px-5 py-2 bg-green-500 mr-5 text-white font-semibold"
+                    >
+                      Download Invoice
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
-
           </div>
-
-
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
             {membershipOptions.map((option, index) => {
@@ -374,7 +382,10 @@ const Membership = () => {
               ) {
                 buttonLabel = "Extend Membership";
                 onClickHandler = () => extendMembership(option);
-              } else if (userSubscription === "6-month" && option.key === "12-month") {
+              } else if (
+                userSubscription === "6-month" &&
+                option.key === "12-month"
+              ) {
                 buttonLabel = "Upgrade to 12-Month Membership";
                 onClickHandler = () => makePayment(option, true);
               }
@@ -389,21 +400,28 @@ const Membership = () => {
                   </div>
                   <div className="text-center p-4 md:p-8 text-[#2E2E2E] flex flex-col gap-5">
                     <p>
-                      A free Registration enables access to vendor’s contact details and the addition of products to a wish list.
+                      A free Registration enables access to vendor’s contact
+                      details and the addition of products to a wish list.
                     </p>
                     <p>
-                      A paid Membership enables Members to create and advertise an unlimited number of products, Member’s profiles and their contact details during the duration of the chosen Membership term.
+                      A paid Membership enables Members to create and advertise
+                      an unlimited number of products, Member’s profiles and
+                      their contact details during the duration of the chosen
+                      Membership term.
                     </p>
                     <p>
-
-                      Each individual advertisement is limited to 5 images but has no restrictions on text.
+                      Each individual advertisement is limited to 5 images but
+                      has no restrictions on text.
                     </p>
                     <p>
-
-                      Given that no commission is required on any sales, members are responsible for negotiating all transactions, coordinating payments, and arranging shipping with buyers directly.
+                      Given that no commission is required on any sales, members
+                      are responsible for negotiating all transactions,
+                      coordinating payments, and arranging shipping with buyers
+                      directly.
                     </p>
                     <p>
-                      A portion of all membership fees will be utilized for the marketing and enhancement of the website and its content.
+                      A portion of all membership fees will be utilized for the
+                      marketing and enhancement of the website and its content.
                     </p>
                     <p>
                       <b>
@@ -416,12 +434,12 @@ const Membership = () => {
                     </p>
                   </div>
                   <div className="flex justify-center">
-
                     <button
-                      className={`w-[250px] py-3 px-4 ${buttonLabel === "Cancel Membership"
-                        ? "bg-red-500 text-white"
-                        : "bg-[#F05025] text-white"
-                        }`}
+                      className={`w-[250px] py-3 px-4 ${
+                        buttonLabel === "Cancel Membership"
+                          ? "bg-red-500 text-white"
+                          : "bg-[#F05025] text-white"
+                      }`}
                       onClick={onClickHandler}
                     >
                       {buttonLabel}
@@ -436,13 +454,17 @@ const Membership = () => {
           {isUpgradeModalOpen && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
               <div className="bg-white rounded-lg p-6 w-96">
-                <h3 className="text-xl font-semibold mb-4">Choose a Membership</h3>
+                <h3 className="text-xl font-semibold mb-4">
+                  Choose a Membership
+                </h3>
                 <select
                   value={selectedMembership}
                   onChange={(e) => setSelectedMembership(e.target.value)}
                   className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
                 >
-                  <option value="" disabled>Select membership type</option>
+                  <option value="" disabled>
+                    Select membership type
+                  </option>
                   <option value="6-month">6-Month Membership</option>
                   <option value="12-month">12-Month Membership</option>
                   {/* Add more options as needed */}
@@ -464,12 +486,12 @@ const Membership = () => {
               </div>
             </div>
           )}
-
         </>
       ) : (
         <div>
           <p className="text-lg text-gray-700 mb-5">
-            You do not have an active membership. Please choose a plan and subscribe.
+            You do not have an active membership. Please choose a plan and
+            subscribe.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
             {membershipOptions.map((option, index) => (
@@ -482,21 +504,28 @@ const Membership = () => {
                 </div>
                 <div className="text-center p-4 md:p-8 text-[#2E2E2E] flex flex-col gap-5">
                   <p>
-                    A free Registration enables access to vendor’s contact details and the addition of products to a wish list.
+                    A free Registration enables access to vendor’s contact
+                    details and the addition of products to a wish list.
                   </p>
                   <p>
-                    A paid Membership enables Members to create and advertise an unlimited number of products, Member’s profiles and their contact details during the duration of the chosen Membership term.
+                    A paid Membership enables Members to create and advertise an
+                    unlimited number of products, Member’s profiles and their
+                    contact details during the duration of the chosen Membership
+                    term.
                   </p>
                   <p>
-
-                    Each individual advertisement is limited to 5 images but has no restrictions on text.
+                    Each individual advertisement is limited to 5 images but has
+                    no restrictions on text.
                   </p>
                   <p>
-
-                    Given that no commission is required on any sales, members are responsible for negotiating all transactions, coordinating payments, and arranging shipping with buyers directly.
+                    Given that no commission is required on any sales, members
+                    are responsible for negotiating all transactions,
+                    coordinating payments, and arranging shipping with buyers
+                    directly.
                   </p>
                   <p>
-                    A portion of all membership fees will be utilized for the marketing and enhancement of the website and its content.
+                    A portion of all membership fees will be utilized for the
+                    marketing and enhancement of the website and its content.
                   </p>
                   <p>
                     <b>
@@ -517,13 +546,9 @@ const Membership = () => {
                     Buy Now
                   </button>
                 </div>
-
               </div>
             ))}
           </div>
-
-
-
         </div>
       )}
 

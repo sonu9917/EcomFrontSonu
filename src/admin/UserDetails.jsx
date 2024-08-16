@@ -1,106 +1,195 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useGetUserDetailsQuery } from "../redux/productSlice";
-import { FaWallet, FaRegCreditCard } from "react-icons/fa"; // Import icons for wallet and UPI
+import { useGetUserDetailsQuery, useUpdateUserDetailsMutation } from "../redux/productSlice"; // Import the update mutation
 
 const UserDetails = () => {
   const { data, refetch } = useGetUserDetailsQuery();
+  const [updateUserDetails] = useUpdateUserDetailsMutation(); // Use the update mutation
   const location = useLocation();
 
   useEffect(() => {
     refetch();
   }, [refetch, location]);
 
-  console.log(data);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
 
-  const [walletBalance, setWalletBalance] = useState(data?.user.wallet); // Example initial balance
-  const [upiId, setUpiId] = useState("");
-  const [amount, setAmount] = useState("");
+  useEffect(() => {
+    if (data?.user) {
+      setFormData({
+        firstName: data.user.firstName,
+        lastName: data.user.lastName,
+        email: data.user.email,
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+    }
+  }, [data]);
 
-  const handleSendMoney = (e) => {
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (amount <= 0 || amount > walletBalance) {
-      toast.error("Invalid amount");
+
+    // Check if new password and confirm password match
+    if (formData.newPassword && formData.newPassword !== formData.confirmPassword) {
+      toast.error("New password and confirm password do not match");
       return;
     }
-    setWalletBalance(walletBalance - amount);
-    toast.success("Money sent successfully");
+
+    try {
+      await updateUserDetails({
+        id: data.user._id,
+        data: {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          currentPassword: formData.currentPassword,
+          newPassword: formData.newPassword,
+        },
+      });
+      toast.success("User details updated successfully");
+      refetch(); // Refetch user details after update
+    } catch (error) {
+      toast.error(error?.data?.message || "Failed to update user details");
+    }
   };
 
   return (
-    <div className="flex flex-col items-center p-4 bg-gray-100 min-h-screen">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          User Details
+    <div className="flex flex-col p-4">
+      <div className="w-full bg-white p-8">
+        <h2 className="text-3xl font-bold mb-6 text-[#F05025]">
+          Edit Account Details
         </h2>
 
-        {/* User Info */}
-        <div className="mb-6">
-          <h3 className="text-2xl font-semibold text-gray-700">
-            {data?.user.firstName + " " + data?.user.lastName}
-          </h3>
-          <p className="text-gray-500">{data?.user.email}</p>
-        </div>
-
-        {/* Wallet Info */}
-        <div className="mb-8">
-          <div className="flex items-center mb-2">
-            <FaWallet className="text-blue-500 text-xl mr-2" />
-            <h3 className="text-lg font-bold text-gray-700">My Wallet</h3>
-          </div>
-          <p className="text-3xl font-semibold text-gray-800">${walletBalance}</p>
-        </div>
-
-        {/* Send Money Form */}
-        <form onSubmit={handleSendMoney} className="w-full">
-          <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="upiId"
-            >
-              UPI ID
-            </label>
-            <div className="relative">
-              <FaRegCreditCard className="absolute text-gray-400 left-3 top-1/2 transform -translate-y-1/2" />
+        <form className="mt-4 mb-3 px-4" onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div>
+              <label
+                htmlFor="firstName"
+                className="text-[#111827] mb-[10px] font-medium text-sm lg:text-base leading-5"
+              >
+                First Name <span>*</span>
+              </label>
+              <br />
               <input
                 type="text"
-                id="upiId"
-                name="upiId"
-                value={upiId}
-                onChange={(e) => setUpiId(e.target.value)}
-                className="shadow appearance-none border rounded w-full py-2 px-3 pl-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your UPI ID"
+                id="firstName"
+                className="border py-3 px-4 w-full mt-[10px]"
+                value={formData.firstName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="lastName"
+                className="text-[#111827] font-medium text-sm lg:text-base leading-5"
+              >
+                Last Name <span>*</span>
+              </label>
+              <br />
+              <input
+                type="text"
+                id="lastName"
+                className="border py-3 px-4 w-full mt-[10px]"
+                value={formData.lastName}
+                onChange={handleInputChange}
                 required
               />
             </div>
           </div>
-          <div className="mb-6">
+
+          <div className="mt-8">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="amount"
+              htmlFor="email"
+              className="text-[#111827] font-medium text-sm lg:text-base leading-5"
             >
-              Amount
+              Email <span>*</span>
             </label>
+            <br />
             <input
-              type="number"
-              id="amount"
-              name="amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter amount"
+              type="email"
+              id="email"
+              className="border py-3 px-4 w-full mt-[10px]"
+              value={formData.email}
+              onChange={handleInputChange}
+              disabled
               required
             />
           </div>
-          <div className="flex items-center justify-between">
-            <button
-              type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
-            >
-              Send Money
-            </button>
-          </div>
+
+          <fieldset className="border p-4 rounded mt-10">
+            <legend className="text-lg font-medium">Password Change</legend>
+
+            <div className="mb-4 p-2">
+              <label
+                htmlFor="currentPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Current Password (leave blank to leave unchanged)
+              </label>
+              <input
+                type="password"
+                id="currentPassword"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 sm:text-sm"
+                value={formData.currentPassword}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="mb-4 p-2">
+              <label
+                htmlFor="newPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
+                New Password (leave blank to leave unchanged)
+              </label>
+              <input
+                type="password"
+                id="newPassword"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 sm:text-sm"
+                value={formData.newPassword}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="mb-4 p-2">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Confirm New Password
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 sm:text-sm"
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
+              />
+            </div>
+          </fieldset>
+
+          <button
+            className="text-white rounded py-3 px-6 bg-[#F05025] mt-5 font-medium"
+            type="submit"
+          >
+            Save Changes
+          </button>
         </form>
       </div>
     </div>

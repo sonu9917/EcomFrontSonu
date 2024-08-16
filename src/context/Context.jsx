@@ -7,6 +7,7 @@ const Context = (props) => {
 
   const [cookie, setCookie] = useCookies(['token']);
   const [token, setToken] = useState(cookie.token);
+  const [active, setActive] = useState("Dashboard");
 
   const membershipOptions = [
     {
@@ -31,7 +32,7 @@ const Context = (props) => {
   }, [cookie.token]);
 
   return (
-    <MainContext.Provider value={{ cookie, setCookie, token,membershipOptions }}>{props.children}</MainContext.Provider>
+    <MainContext.Provider value={{ cookie, setCookie, token,membershipOptions,active,setActive}}>{props.children}</MainContext.Provider>
   )
 }
 
