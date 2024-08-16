@@ -3,20 +3,25 @@ import { FaRegUserCircle } from 'react-icons/fa';
 import axios from '../axiosConfig';
 import ProductList from './ProductList';
 import NoStoreFound from './NoStoreFound';
+import { FaMapMarkerAlt } from "react-icons/fa";
+import { IoMdPhonePortrait } from "react-icons/io";
+import { MdOutlineEmail } from "react-icons/md";
+import { IoMdStar } from "react-icons/io";
+import { FaShoppingCart } from "react-icons/fa";
+import { IoIosArrowDown } from "react-icons/io";
 
 const VisitStore = () => {
-  const [store, setStore] = useState(null); // Initialize with null for better handling
-
-  console.log(store)
+  const [store, setStore] = useState(null);
+  const [activeTab, setActiveTab] = useState('products');
+  const [sortOption, setSortOption] = useState('default');
+  const [showSchedule, setShowSchedule] = useState(false);
 
   useEffect(() => {
     axios
       .get('/store/getStore')
       .then((response) => {
         if (response.data) {
-          console.log(response.data)
-
-          setStore(response.data); // Set the first store if there's more than one
+          setStore(response.data);
         }
       })
       .catch((err) => {
@@ -25,32 +30,142 @@ const VisitStore = () => {
   }, []);
 
   if (!store) {
-    return (
-      <NoStoreFound/>
-    );
+    return <NoStoreFound />;
   }
 
+  const handleSortChange = (event) => {
+    setSortOption(event.target.value);
+    // You can implement sorting logic here if needed
+  };
+
+  const handleMouseEnter = () => {
+    setShowSchedule(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowSchedule(false);
+  };
+
+  const formatTime = (time) => {
+    const [hours, minutes] = time.split(':').map(Number);
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12;
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    return `${formattedHours}:${formattedMinutes} ${period}`;
+  };
+
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="min-h-screen">
       <div className="container mx-auto p-4">
         <div className="grid grid-cols-12 gap-7">
           <div
-            className="col-span-12 h-40 bg-cover bg-center m-4 p-4 rounded-md shadow-lg"
+            className="col-span-12 h-[361px] relative bg-cover bg-center m-4 p-4 rounded-md"
             style={{
               backgroundImage: `url(${store.banner?.url || 'default-banner.jpg'})`,
             }}
           >
-            <div className="flex items-center mb-4 mt-4">
-              {store.profilePicture?.url ? (
-                <img
-                  src={store.profilePicture.url}
-                  alt="Vendor Profile"
-                  className="w-16 h-16 rounded-full border-2 border-white shadow-md"
-                />
-              ) : (
-                <FaRegUserCircle className="w-16 h-16 text-white" />
+            <div className="absolute top-0 left-0 text-white h-full items-center mb-4 p-4" style={
+              {
+                backgroundColor: 'rgba(0, 0, 0, 0.65)'
+              }
+            }>
+              <div className='flex flex-col gap-3 w-[250px]'>
+                {/* vendor profile */}
+                <div className='flex justify-center'>
+                  {store.profilePicture?.url ? (
+                    <img
+                      src={store.profilePicture.url}
+                      alt="Vendor Profile"
+                      className="w-16 h-16 rounded-full border-2 border-white shadow-md"
+                    />
+                  ) : (
+                    <FaRegUserCircle className="w-16 h-16 text-white" />
+                  )}
+                </div>
+
+                {/* vendor name */}
+                <div className="ml-4 font-bold text-white text-2xl flex cursor-pointer justify-center">
+                  {store.storeName || 'Vendor Name'}
+                </div>
+
+                {/* vendor address */}
+                <div className='flex gap-2 items-center cursor-pointer pl-5'>
+                  <div>
+                    <FaMapMarkerAlt className='text-xl' />
+                  </div>
+                  <div>
+                    {store.address.street + ' ' + store.address.street2 + ' ' + store.address.city + ' ' + store.address.country}
+                  </div>
+                </div>
+
+                {/* vendor mobile */}
+                <div className='flex gap-2 items-center cursor-pointer pl-5'>
+                  <div>
+                    <IoMdPhonePortrait className='text-xl' />
+                  </div>
+                  <div>
+                    {store.phone}
+                  </div>
+                </div>
+
+                {/* vendor email */}
+                <div className='flex gap-2 items-center cursor-pointer pl-5'>
+                  <div>
+                    <MdOutlineEmail className='text-xl'/>
+                  </div>
+                  <div>
+                    {store.email}
+                  </div>
+                </div>
+
+                {/* No rating found */}
+                <div className='flex gap-2 items-center cursor-pointer pl-5'>
+                  <div>
+                    <IoMdStar className='text-xl' />
+                  </div>
+                  <div>
+                    No rating found yet!
+                  </div>
+                </div>
+
+                {/* vendor schedule */}
+                <div className='flex gap-2 items-center cursor-pointer pl-5'
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}>
+                  <div>
+                    <FaShoppingCart className='text-xl' />
+                  </div>
+                  <div className='flex items-center'>
+                    store is close on 6:30 pm <span className='ml-2'><IoIosArrowDown /></span>
+                  </div>
+                </div>
+
+              </div>
+
+              {showSchedule && (
+                <div id="vendor-store-times" onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave} className='bg-white w-[600px]'>
+                  <div className="store-times-heading justify-center items-center gap-3 flex">
+                    <i className="fas fa-calendar-day"></i>
+                    <h4 className='text-black font-bold text-xl'>Weekly Store Timing</h4>
+                  </div>
+
+                  <div className="store-time-tags flex flex-col">
+                    {store?.schedule.map((d, i) => {
+                      return (
+                        <div key={i} className='flex'>
+                          <div className="store-days">{d.day}</div>
+                          <div className="store-times">
+                            <span className="store-open">
+                              {formatTime(d.openTime)} - {formatTime(d.closeTime)}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               )}
-              <span className="ml-4 font-bold text-white text-2xl">{store.name || 'Vendor Name'}</span>
             </div>
             <p className="text-gray-200">
               <span className="text-white text-xl font-bold">Rating:</span>{' '}
@@ -59,26 +174,76 @@ const VisitStore = () => {
               </span>
             </p>
           </div>
-          <div className="col-span-12 bg-white p-6 rounded-md shadow-lg">
-            <h2 className="text-lg font-bold mb-4">Products</h2>
-            <div className="flex items-center mb-4">
-              <input
-                type="text"
-                placeholder="Enter product name"
-                className="px-4 py-2 border border-gray-300 rounded-md w-full mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+
+          {/* Tabs */}
+          <div className="col-span-12 bg-white p-6 rounded-md">
+            <div className="flex border-b border-gray-300">
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline"
-                type="button"
+                className={`w-1/2 py-2 text-center ${activeTab === 'products' ? 'bg-[#F05025] text-white' : 'bg-gray-100 text-gray-700'}`}
+                onClick={() => setActiveTab('products')}
               >
-                Search
+                Products
+              </button>
+              <button
+                className={`w-1/2 py-2 text-center ${activeTab === 'bio' ? 'bg-[#F05025] text-white' : 'bg-gray-100 text-gray-700'}`}
+                onClick={() => setActiveTab('bio')}
+              >
+                Vendor Biography
               </button>
             </div>
-            <div className="bg-blue-100 border border-blue-300 p-4 rounded-md mb-4">
-              <ProductList storeId={store.id} />
-            
+            <div className="p-4">
+              {activeTab === 'products' ? (
+                <div>
+                  <div className='flex justify-between mt-4 '>
+                    <div className="flex items-center">
+                      <input
+                        type="text"
+                        placeholder="Enter product name"
+                        className="px-5 py-3 border border-gray-300  w-full mr-2"
+                      />
+                      <button
+                        className="bg-[#F05025] text-white font-bold py-3 px-5"
+                        type="button"
+                      >
+                        Search
+                      </button>
+                    </div>
+                    <div className="flex items-center ">
+                      <select
+                        value={sortOption}
+                        onChange={handleSortChange}
+                        className="px-5 py-3 border border-gray-300"
+                      >
+                        <option value="default">Sort by Default</option>
+                        <option value="price_asc">Price: Low to High</option>
+                        <option value="price_desc">Price: High to Low</option>
+                        <option value="rating">Rating</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="p-4 rounded-md mb-4">
+                    <ProductList storeId={store._id} sortOption={sortOption} />
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center gap-10">
+                  <div>
+                    {store.biographyPicture ? (
+                      <img
+                        src={store.biographyPicture.url}
+                        alt="Biography"
+                        className="w-32 h-32 rounded-full mx-auto mb-4"
+                      />
+                    ) : (
+                      <FaRegUserCircle className="w-32 h-32 mx-auto mb-4 text-gray-400" />
+                    )}
+                  </div>
+                  <p className="text-gray-700">
+                    {store.biographyText || 'No biography available.'}
+                  </p>
+                </div>
+              )}
             </div>
-           
           </div>
         </div>
       </div>

@@ -7,18 +7,11 @@ import {
     Toolbar
 } from 'react-simple-wysiwyg';
 
-const CodeEditorPage = () => {
-
-    const [html, setHtml] = useState('my <b>HTML</b>');
-    const [value, setValue] = useState('simple text');
-
-    function onChange(e) {
-        setValue(e.target.value);
-    }
+const CodeEditorPage = ({value,onChange}) => {
 
     return (
         <EditorProvider>
-            <Editor value={value} onChange={onChange}>
+            <Editor value={value} name='biography' onChange={onChange}>
                 <Toolbar>
                     <BtnBold />
                     <BtnItalic />

@@ -126,7 +126,7 @@ const StoreSeo = () => {
               Facebook Image URL
             </label>
             <input
-              type="url"
+              type="file"
               id="facebookImage"
               name="facebookImage"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -174,7 +174,7 @@ const StoreSeo = () => {
               Twitter Image URL
             </label>
             <input
-              type="url"
+              type="file"
               id="twitterImage"
               name="twitterImage"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"

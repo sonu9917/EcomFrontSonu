@@ -33,14 +33,15 @@ body {
   right: -8px !important;
 }
 
-.singleProduct{
+.singleProduct {
   max-width: 580px !important;
   height: 550px !important;
 }
 
 
 
-.storeaddform{border: 4px dashed #d8d8d8;
+.storeaddform {
+  border: 4px dashed #d8d8d8;
   margin: 0 auto 38px;
   text-align: center;
   overflow: hidden;
@@ -84,18 +85,29 @@ body {
   padding-top: 16px;
 }
 
-.storeaddform #file-chosen{
+.storeaddform #file-chosen {
   margin-left: 0.3rem;
   font-family: sans-serif;
 }
 
-.customFormDiv{width: 100%; display:inline-block;text-align: center;}
-.customFormDiv form{width: 77%; display:inline-block;text-align: center;}
+.customFormDiv {
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+}
+
+.customFormDiv form {
+  width: 77%;
+  display: inline-block;
+  text-align: center;
+}
+
 .customFormStore label {
   font-size: 14px;
   color: #111827;
   font-weight: bold;
 }
+
 .customFormStore input {
   font-size: 16px;
   font-style: normal;
@@ -105,8 +117,72 @@ body {
   padding: 11px 16px;
   border-radius: 4px;
 }
-.customFormStore .editerbio {width: 65%;}
 
-  .customFormStore .rsw-editor {min-height: 450px!important;}
+.customFormStore .editerbio {
+  width: 65%;
+}
 
-  .customFormStore textarea {width: 65%;}
+.rsw-editor {
+  min-height: 450px !important;
+}
+
+.customFormStore textarea {
+  width: 65%;
+}
+
+
+#vendor-store-times{
+  /* top: 110%; */
+  left: -5%;
+  color: #3E474F;
+  width: 310px;
+  z-index: 1;
+  /* display: none; */
+  padding: 1.5em 2em;
+  overflow: auto;
+  position: absolute;
+  max-height: 435px;
+  background: #FFFFFF;
+  box-shadow: 0 10px 15px -3px #00000040, 0 4px 6px -4px #00000010;
+  border-radius: 6px;
+}
+
+#vendor-store-times
+.store-times-heading{
+  margin: 10px 0 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3E474F;
+}
+
+.store-times-tags {
+  display: flex;
+  font-size: 15px;
+  margin-bottom: 12px;
+  color: #3E474F;
+}
+
+.store-days {
+  flex: 2.3;
+  color: #3E474F;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.store-times {
+  flex: 4;
+  font-size: 15px;
+  color: #3E474F;
+}
+
+.store-open {
+  cursor: pointer;
+  display: inline-block;
+  padding: 2px 3px 3.5px;
+  transition: 0.5s ease;
+  list-style: none;
+  margin-bottom: 5.5px;
+  border-radius: 0.375rem;
+  text-decoration: none;
+}
