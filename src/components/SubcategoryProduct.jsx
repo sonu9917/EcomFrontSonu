@@ -63,7 +63,7 @@ const SubcategoryProduct = () => {
         <>
           {products?.product.length === 0 ? (
             <div className="text-center text-gray-700 text-xl pb-5">
-              <NoProductFound/>
+              <NoProductFound />
             </div>
           ) : (
             <>
@@ -83,7 +83,7 @@ const SubcategoryProduct = () => {
                   return (
                     <div
                       key={i}
-                      className="border pl-4 pt-3 shadow-lg cursor-pointer transition-transform transform hover:scale-105"
+                      className="border pl-4 pt-3 cursor-pointer "
                     >
                       <div className='w-[265px] h-[262px]'>
                         <img
@@ -118,6 +118,63 @@ const SubcategoryProduct = () => {
                   );
                 })}
               </div>
+
+              {/* Related Product */}
+              <div className="p-4 bg-white rounded-lg ">
+                <h2 className="text-[30px] font-thin capitalize text-left mb-[30px] text-[#7a7a7a]">
+                  Related Product
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {products?.product
+                    .slice(-4) // This selects the last four items from the array
+                    .map((product, i) => {
+                      const isProductInWishList = wishListProduct.some(
+                        (item) => item.pId === product._id
+                      );
+                      return (
+                        <div
+                          key={i}
+                          className="border pl-2 pt-3 shadow-lg cursor-pointer"
+                        >
+                          <div className="w-[265px] h-[262px]">
+                            <img
+                              src={product.images[0]}
+                              alt={product.name}
+                              className="w-full h-full object-cover"
+                              onClick={() => navigate(`/shop/${product._id}`)}
+                            />
+                          </div>
+                          <div className="flex flex-col gap-2">
+                            <h2 className='mt-2 text-gray-400 text-[14px]'>{categoryName}</h2>
+                            <h3 className="text-xl font-medium text-[#3a3c3c]">
+                              {product.name}
+                            </h3>
+                            <p className="text-gray-700 text-xl font-medium flex justify-between">
+                              ${product.price}
+                            </p>
+                            <button
+                              className={`pt-1 pb-1 px-3 mt-2 mb-5 w-[200px] text-white rounded bg-[#f05029] transition-colors duration-300 hover:bg-[#e03e1f]`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleWishListClick(
+                                  product._id,
+                                  isProductInWishList
+                                );
+                              }}
+                            >
+                              {isProductInWishList
+                                ? "Remove from Wishlist"
+                                : "Add to Wishlist"}
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+
+
+
             </>
           )}
         </>

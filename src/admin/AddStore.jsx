@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from '../axiosConfig';
 import { toast } from 'react-toastify';
 import CodeEditorPage from './CodeEditorPage';
+import Select from 'react-select';
+import { Country, State } from 'country-state-city';
+import Loader from '../components/Loader'
+import { Link } from 'react-router-dom';
 
 const AddStoreForm = () => {
   // state to store data
@@ -32,6 +36,38 @@ const AddStoreForm = () => {
     biographyPicture: null,
     biographyText: '',
   });
+
+
+  // Loader related code
+  const [isLoading, setIsLoading] = useState(false)
+
+
+  // country and state related code
+  const [countryOptions, setCountryOptions] = useState([]);
+  const [stateOptions, setStateOptions] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+
+  useEffect(() => {
+    // Initialize country options
+    const countries = Country.getAllCountries().map(c => ({
+      value: c.isoCode,
+      label: c.name
+    }));
+    setCountryOptions(countries);
+
+    // Update state options when selectedCountry changes
+    if (selectedCountry) {
+      const states = State.getStatesOfCountry(selectedCountry).map(s => ({
+        value: s.isoCode,
+        label: s.name
+      }));
+      console.log(states)
+      setStateOptions(states);
+    } else {
+      setStateOptions([]); // Clear state options if no country is selected
+    }
+  }, [selectedCountry]);
+
 
   // state to store existing store data
   const [existingStore, setExistingStore] = useState(null);
@@ -98,6 +134,7 @@ const AddStoreForm = () => {
     }));
   };
 
+  // handle address change
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
     setStoreData((prevData) => ({
@@ -106,6 +143,8 @@ const AddStoreForm = () => {
     }));
   };
 
+
+  // handleScheduleChange
   const handleScheduleChange = (index, field, value) => {
     const newSchedule = [...storeData.schedule];
     newSchedule[index][field] = value;
@@ -118,7 +157,7 @@ const AddStoreForm = () => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(storeData)
+    setIsLoading(true)
 
     const formData = new FormData();
     formData.append('banner', storeData.banner.file);
@@ -139,8 +178,6 @@ const AddStoreForm = () => {
     formData.append('email', storeData.email);
     formData.append('schedule', JSON.stringify(storeData.schedule));
 
-    // console.log(formData)
-
 
     // api call
     const apiCall = existingStore ? axios.post('/store/updateStore', formData, {
@@ -149,40 +186,13 @@ const AddStoreForm = () => {
       headers: { "Content-Type": "multipart/form-data" },
     });
 
-    
-     apiCall.then((response) => {
-        console.log(response)
 
-        toast.success(response.data.message);
-        setStoreData({
-          banner: null,
-          profilePicture: null,
-          storeName: '',
-          storeCategory: '',
-          address: {
-            street: '',
-            street2: '',
-            city: '',
-            postalCode: '',
-            country: '',
-            state: '',
-          },
-          phone: '',
-          email: '',
-          schedule: [
-            { day: 'Monday', openTime: '', closeTime: '' },
-            { day: 'Tuesday', openTime: '', closeTime: '' },
-            { day: 'Wednesday', openTime: '', closeTime: '' },
-            { day: 'Thursday', openTime: '', closeTime: '' },
-            { day: 'Friday', openTime: '', closeTime: '' },
-            { day: 'Saturday', openTime: '', closeTime: '' },
-            { day: 'Sunday', openTime: '', closeTime: '' },
-          ],
-          biographyPicture: null,
-          biographyText: '',
-        });
-      })
+    apiCall.then((response) => {
+      setIsLoading(false)
+      toast.success(response.data.message);
+    })
       .catch((error) => {
+        setIsLoading(false)
         console.log(error)
         toast.error('Error:', error.response.data.error)
       });
@@ -191,119 +201,123 @@ const AddStoreForm = () => {
 
 
   return (
-    <>
-      <div className='flex items-center gap-2 font-bold'>
-        <span className='text-[24px] pt-[13px]'>Settings</span>
-        <span className='text-[80%] pt-3'>→</span>
-        <span className='text-[#F05025] pt-3 text-[19px] cursor-pointer'>Visit Store</span>
-      </div>
-
-      <div className='customFormDiv'>
-        <form onSubmit={handleSubmit} className="p-6 bg-white">
-          {/* Banner Image */}
-          <div className="mb-4 flex items-center">
-            <div className='storeaddform'>
-              <input
-                type="file"
-                name="banner"
-                id="bannerUpload"
-                hidden
-                onChange={handleFileChange}
-              />
-              <label htmlFor="bannerUpload">Upload File</label>
-              {/* <span id="file-chosen">{storeData.banner ? storeData.banner.file.name : 'No file chosen'}</span> */}
-              {storeData.banner && (
-                <div className="border-dashed border-2 border-gray-300 p-2 mt-2">
-                  <img src={storeData.banner.preview} alt="Banner Preview" className="w-full h-auto" />
-                </div>
-              )}
-              <p>Upload a banner for your store. Banner size is (625x300) pixels.</p>
+    <div>
+      {
+        isLoading ?
+        <Loader/> :
+          <div>
+            <div className='flex items-center gap-2 font-bold'>
+              <span className='text-[24px] pt-[13px]'>Settings</span>
+              <span className='text-[80%] pt-3'>→</span>
+              <Link to={'/admin/visitStore'} className='text-[#F05025] pt-3 text-[19px] cursor-pointer'>Visit Store</Link>
             </div>
-          </div>
 
-          {/* Profile Picture */}
-          <div className="mb-4 flex items-center">
-            <label className="w-40 text-gray-700 font-bold mb-2">Profile Picture:</label>
-            <div className='storeaddform2 flex gap-5 items-center mt-2'>
-              <input
-                type="file"
-                name="profilePicture"
-                id="profilePictureUpload"
-                hidden
-                onChange={handleFileChange}
-              />
-              <label htmlFor="profilePictureUpload">Upload File</label>
-              {/* <span id="file-chosen">{storeData.profilePicture ? storeData.profilePicture.file.name : 'No file chosen'}</span> */}
-              {storeData.profilePicture && (
-                <div className="rounded-full border-2 border-gray-300 p-2 mt-2">
-                  <img src={storeData.profilePicture.preview} alt="Profile Preview" className="w-20 h-20 rounded-full" />
+            <div className='customFormDiv'>
+              <form onSubmit={handleSubmit} className="p-6 bg-white">
+                {/* Banner Image */}
+                <div className="mb-4 flex items-center">
+                  <div className='storeaddform'>
+                    <input
+                      type="file"
+                      name="banner"
+                      id="bannerUpload"
+                      hidden
+                      onChange={handleFileChange}
+                    />
+                    <label htmlFor="bannerUpload">Upload File</label>
+                    {/* <span id="file-chosen">{storeData.banner ? storeData.banner.file.name : 'No file chosen'}</span> */}
+                    {storeData.banner && (
+                      <div className="border-dashed border-2 border-gray-300 p-2 mt-2">
+                        <img src={storeData.banner.preview} alt="Banner Preview" className="w-full h-auto" />
+                      </div>
+                    )}
+                    <p>Upload a banner for your store. Banner size is (625x300) pixels.</p>
+                  </div>
                 </div>
-              )}
-            </div>
-          </div>
 
-          {/* Store Name */}
-          <div className="mb-4 flex items-center">
-            <label className="w-40 text-gray-700 font-bold mb-2">Store Name:</label>
-            <input
-              type="text"
-              name="storeName"
-              value={storeData.storeName}
-              onChange={handleInputChange}
-              className="border border-gray-300 p-2 w-full"
-            />
-          </div>
+                {/* Profile Picture */}
+                <div className="mb-4 flex items-center">
+                  <label className="w-40 text-gray-700 font-bold mb-2">Profile Picture:</label>
+                  <div className='storeaddform2 flex gap-5 items-center mt-2'>
+                    <input
+                      type="file"
+                      name="profilePicture"
+                      id="profilePictureUpload"
+                      hidden
+                      onChange={handleFileChange}
+                    />
+                    <label htmlFor="profilePictureUpload">Upload File</label>
+                    {/* <span id="file-chosen">{storeData.profilePicture ? storeData.profilePicture.file.name : 'No file chosen'}</span> */}
+                    {storeData.profilePicture && (
+                      <div className="rounded-full border-2 border-gray-300 p-2 mt-2">
+                        <img src={storeData.profilePicture.preview} alt="Profile Preview" className="w-20 h-20 rounded-full" />
+                      </div>
+                    )}
+                  </div>
+                </div>
 
-          {/* Store Category */}
-          <div className="mb-4 flex items-center">
-            <label className="w-40 text-gray-700 font-bold mb-2">Store Category:</label>
-            <input
-              type="text"
-              name="storeCategory"
-              value={storeData.storeCategory}
-              onChange={handleInputChange}
-              className="border border-gray-300 p-2 w-full"
-            />
-          </div>
+                {/* Store Name */}
+                <div className="mb-4 flex items-center">
+                  <label className="w-40 text-gray-700 font-bold mb-2">Store Name:</label>
+                  <input
+                    type="text"
+                    name="storeName"
+                    value={storeData.storeName}
+                    onChange={handleInputChange}
+                    className="border border-gray-300 p-2 w-full"
+                  />
+                </div>
 
-          {/* Address Fields */}
-          <div className="mb-4 flex ">
-            <label className="w-40 text-gray-700 font-bold mb-2">Address:</label>
-            <div className="flex flex-col w-full">
-              <label className="text-sm mb-1 flex">Street-1:</label>
-              <input
-                type="text"
-                name="street"
-                value={storeData.address.street}
-                onChange={handleAddressChange}
-                className="border border-gray-300 p-2 mb-2"
-              />
-              <label className="text-sm mb-1 flex">Street-2:</label>
-              <input
-                type="text"
-                name="street2"
-                value={storeData.address.street2}
-                onChange={handleAddressChange}
-                className="border border-gray-300 p-2 mb-2"
-              />
-              <label className="text-sm mb-1 flex">City:</label>
-              <input
-                type="text"
-                name="city"
-                value={storeData.address.city}
-                onChange={handleAddressChange}
-                className="border border-gray-300 p-2 mb-2"
-              />
-              <label className="text-sm mb-1 flex">Postal Code:</label>
-              <input
-                type="text"
-                name="postalCode"
-                value={storeData.address.postalCode}
-                onChange={handleAddressChange}
-                className="border border-gray-300 p-2 mb-2"
-              />
-              <label className="text-sm mb-1 flex">Country:</label>
-              <select
+                {/* Store Category */}
+                <div className="mb-4 flex items-center">
+                  <label className="w-40 text-gray-700 font-bold mb-2">Store Category:</label>
+                  <input
+                    type="text"
+                    name="storeCategory"
+                    value={storeData.storeCategory}
+                    onChange={handleInputChange}
+                    className="border border-gray-300 p-2 w-full"
+                  />
+                </div>
+
+                {/* Address Fields */}
+                <div className="mb-4 flex ">
+                  <label className="w-40 text-gray-700 font-bold mb-2">Address:</label>
+                  <div className="flex flex-col w-full">
+                    <label className="text-sm mb-1 flex">Street-1:</label>
+                    <input
+                      type="text"
+                      name="street"
+                      value={storeData.address.street}
+                      onChange={handleAddressChange}
+                      className="border border-gray-300 p-2 mb-2"
+                    />
+                    <label className="text-sm mb-1 flex">Street-2:</label>
+                    <input
+                      type="text"
+                      name="street2"
+                      value={storeData.address.street2}
+                      onChange={handleAddressChange}
+                      className="border border-gray-300 p-2 mb-2"
+                    />
+                    <label className="text-sm mb-1 flex">City:</label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={storeData.address.city}
+                      onChange={handleAddressChange}
+                      className="border border-gray-300 p-2 mb-2"
+                    />
+                    <label className="text-sm mb-1 flex">Postal Code:</label>
+                    <input
+                      type="text"
+                      name="postalCode"
+                      value={storeData.address.postalCode}
+                      onChange={handleAddressChange}
+                      className="border border-gray-300 p-2 mb-2"
+                    />
+                    <label className="text-sm mb-1 flex">Country:</label>
+                    { /* <select
                 name="country"
                 value={storeData.address.country}
                 onChange={handleAddressChange}
@@ -313,8 +327,44 @@ const AddStoreForm = () => {
                 <option value="India">India</option>
                 <option value="USA">USA</option>
                 <option value="Canada">Canada</option>
-              </select>
-              {storeData.address.country && (
+              </select> */}
+
+                    <Select
+                      value={countryOptions.find(option => option.value === storeData.address.country)}
+                      onChange={(selectedOption) => {
+                        setSelectedCountry(selectedOption.value),
+                          setStoreData((prevData) => ({
+                            ...prevData,
+                            address: {
+                              ...prevData.address,
+                              country: selectedOption.label,
+                              state: '', // reset state when country changes
+                            },
+                          }));
+                      }}
+                      options={countryOptions}
+                      className="mb-2"
+                      placeholder="Select Country"
+                    />
+
+                    <label className="text-sm mb-1 flex">State:</label>
+                    <Select
+                      value={stateOptions.find(option => option.value === storeData.address.state)}
+                      onChange={(selectedOption) => {
+                        setStoreData((prevData) => ({
+                          ...prevData,
+                          address: {
+                            ...prevData.address,
+                            state: selectedOption.label,
+                          },
+                        }));
+                      }}
+                      options={stateOptions}
+                      className="mb-2"
+                      placeholder="Select State"
+                      isDisabled={!storeData.address.country}
+                    />
+                    {/* {storeData.address.country && (
                 <>
                   <label className="text-sm mb-1 flex">State:</label>
                   <select
@@ -344,99 +394,102 @@ const AddStoreForm = () => {
                     )}
                   </select>
                 </>
-              )}
-            </div>
-          </div>
-
-          {/* Biography */}
-          <div className="mb-4 flex items-center">
-            <label className="w-40 text-gray-700 font-bold mb-2">Biography:</label>
-            <div className='storeaddform2 flex gap-5 items-center mt-2'>
-              <input
-                type="file"
-                name="biographyPicture"
-                id="biographyPictureUpload"
-                hidden
-                onChange={handleFileChange}
-              />
-              <label htmlFor="biographyPictureUpload">Upload File</label>
-              <div className='w-40'>
-                {/* <span id="file-chosen">{storeData.biographyPicture ? storeData.biographyPicture.file.name : 'No file chosen'}</span> */}
-                {storeData.biographyPicture && (
-                  <div className="border-dashed border-2 border-gray-300 p-2 mt-2">
-                    <img src={storeData.biographyPicture.preview} alt="Biography Preview" className="w-full h-auto" />
+              )} */}
                   </div>
-                )}
-              </div>
-            </div>
-          </div>
+                </div>
 
-          <div className="mb-4 flex items-center">
-            <label className="w-40 text-gray-700 font-bold mb-2"></label>
-            <div className='storeaddform2 flex gap-5 items-center mt-2'>
-              <CodeEditorPage value={storeData.biographyText}
-                onChange={(e) => handleInputChange({ target: { name: 'biographyText', value: e.target.value } })} />
-            </div>
-          </div>
+                {/* Biography */}
+                <div className="mb-4 flex items-center">
+                  <label className="w-40 text-gray-700 font-bold mb-2">Biography:</label>
+                  <div className='storeaddform2 flex gap-5 items-center mt-2'>
+                    <input
+                      type="file"
+                      name="biographyPicture"
+                      id="biographyPictureUpload"
+                      hidden
+                      onChange={handleFileChange}
+                    />
+                    <label htmlFor="biographyPictureUpload">Upload File</label>
+                    <div className='w-40'>
+                      {/* <span id="file-chosen">{storeData.biographyPicture ? storeData.biographyPicture.file.name : 'No file chosen'}</span> */}
+                      {storeData.biographyPicture && (
+                        <div className="border-dashed border-2 border-gray-300 p-2 mt-2">
+                          <img src={storeData.biographyPicture.preview} alt="Biography Preview" className="w-full h-auto" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
 
-          {/* Phone */}
-          <div className="mb-4 flex items-center">
-            <label className="w-40 text-gray-700 font-bold mb-2">Phone:</label>
-            <input
-              type="text"
-              name="phone"
-              value={storeData.phone}
-              onChange={handleInputChange}
-              className="border border-gray-300 p-2 w-full"
-            />
-          </div>
+                <div className="mb-4 flex items-center">
+                  <label className="w-40 text-gray-700 font-bold mb-2"></label>
+                  <div className='storeaddform2 flex gap-5 items-center mt-2'>
+                    <CodeEditorPage value={storeData.biographyText}
+                      onChange={(e) => handleInputChange({ target: { name: 'biographyText', value: e.target.value } })} />
+                  </div>
+                </div>
 
-          {/* Email */}
-          <div className="mb-4 flex items-center">
-            <label className="w-40 text-gray-700 font-bold mb-2">Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={storeData.email}
-              onChange={handleInputChange}
-              className="border border-gray-300 p-2 w-full"
-            />
-          </div>
-
-          {/* Store Schedule */}
-          <div className="mb-4 flex gap-4">
-            <label className="w-40 text-gray-700 font-bold mb-2">Store Schedule:</label>
-            <div className="flex flex-col gap-2">
-              {storeData.schedule.map((scheduleItem, index) => (
-                <div key={index} className="flex items-center gap-4">
-                  <span className="w-20">{scheduleItem.day}:</span>
+                {/* Phone */}
+                <div className="mb-4 flex items-center">
+                  <label className="w-40 text-gray-700 font-bold mb-2">Phone:</label>
                   <input
-                    type="time"
-                    value={scheduleItem.openTime}
-                    onChange={(e) => handleScheduleChange(index, 'openTime', e.target.value)}
-                    className="border border-gray-300 p-1"
-                  />
-                  <span>to</span>
-                  <input
-                    type="time"
-                    value={scheduleItem.closeTime}
-                    onChange={(e) => handleScheduleChange(index, 'closeTime', e.target.value)}
-                    className="border border-gray-300 p-1"
+                    type="text"
+                    name="phone"
+                    value={storeData.phone}
+                    onChange={handleInputChange}
+                    className="border border-gray-300 p-2 w-full"
                   />
                 </div>
-              ))}
+
+                {/* Email */}
+                <div className="mb-4 flex items-center">
+                  <label className="w-40 text-gray-700 font-bold mb-2">Email:</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={storeData.email}
+                    onChange={handleInputChange}
+                    className="border border-gray-300 p-2 w-full"
+                  />
+                </div>
+
+                {/* Store Schedule */}
+                <div className="mb-4 flex gap-4">
+                  <label className="w-40 text-gray-700 font-bold mb-2">Store Schedule:</label>
+                  <div className="flex flex-col gap-2">
+                    {storeData.schedule.map((scheduleItem, index) => (
+                      <div key={index} className="flex items-center gap-4">
+                        <span className="w-20">{scheduleItem.day}:</span>
+                        <input
+                          type="time"
+                          value={scheduleItem.openTime}
+                          onChange={(e) => handleScheduleChange(index, 'openTime', e.target.value)}
+                          className="border border-gray-300 p-1"
+                        />
+                        <span>to</span>
+                        <input
+                          type="time"
+                          value={scheduleItem.closeTime}
+                          onChange={(e) => handleScheduleChange(index, 'closeTime', e.target.value)}
+                          className="border border-gray-300 p-1"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Submit Button */}
+                <div className="mb-4 pt-3 flex justify-center">
+                  <button type="submit" className="bg-[#F05025] -ml-24 text-white py-2 px-4 ">
+                    Update Settings
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
+      }
+    </div>
 
-          {/* Submit Button */}
-          <div className="mb-4 pt-3 flex justify-center">
-            <button type="submit" className="bg-[#F05025] -ml-24 text-white py-2 px-4 ">
-              Update Settings
-            </button>
-          </div>
-        </form>
-      </div>
-    </>
   );
 };
 

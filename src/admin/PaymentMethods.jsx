@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FaPlus, FaRegEdit } from 'react-icons/fa';
 import { IoMdArrowDropdown } from "react-icons/io";
 import { payple } from '../assets'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const PaymentMethods = () => {
   const [showAddPayment, setShowAddPayment] = useState(false);
@@ -74,7 +74,7 @@ const PaymentMethods = () => {
     <div>
 
       <div className='flex items-center gap-4 font-bold'>
-        <span className='text-[24px] pt-[13px] '>Payment Method</span> <span className='text-[80%] pt-3'>→</span> <span className='text-[#F05025] pt-3 text-[19px] cursor-pointer'>Visit Store</span>
+        <span className='text-[24px] pt-[13px] '>Payment Method</span> <span className='text-[80%] pt-3'>→</span> <Link to={'/admin/visitStore'} className='text-[#F05025] pt-3 text-[19px] cursor-pointer'>Visit Store</Link>
       </div>
 
       <div className='mt-8 mb-4 text-[#888]'>

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useGetUserDetailsQuery, useUpdateUserDetailsMutation } from "../redux/productSlice"; // Import the update mutation
+import Loader from "../components/Loader";
 
 const UserDetails = () => {
   const { data, refetch } = useGetUserDetailsQuery();
   const [updateUserDetails] = useUpdateUserDetailsMutation(); // Use the update mutation
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     refetch();
@@ -46,13 +48,15 @@ const UserDetails = () => {
     e.preventDefault();
 
     // Check if new password and confirm password match
-    if (formData.newPassword && formData.newPassword !== formData.confirmPassword) {
+    if (formData.currentPassword == '' && formData.newPassword !== formData.confirmPassword) {
       toast.error("New password and confirm password do not match");
       return;
     }
 
+    setIsLoading(true); // Start loading
+
     try {
-      await updateUserDetails({
+      const response = await updateUserDetails({
         id: data.user._id,
         data: {
           firstName: formData.firstName,
@@ -61,12 +65,28 @@ const UserDetails = () => {
           newPassword: formData.newPassword,
         },
       });
-      toast.success("User details updated successfully");
-      refetch(); // Refetch user details after update
+
+      // console.log(response)
+      if (response.error) {
+        if (response.error.data.message === 'Current password is incorrect') {
+          toast.error("Current password is incorrect");
+        } else {
+          toast.error(response.error.data.message || "Failed to update user details");
+        }
+      } else {
+        toast.success("User details updated successfully");
+        refetch(); // Refetch user details after update
+      }
     } catch (error) {
       toast.error(error?.data?.message || "Failed to update user details");
+    } finally {
+      setIsLoading(false); // End loading
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex flex-col p-4">

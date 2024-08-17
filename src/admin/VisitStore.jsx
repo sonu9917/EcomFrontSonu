@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaRegUserCircle } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaRegUserCircle, FaTwitter } from 'react-icons/fa';
 import axios from '../axiosConfig';
 import ProductList from './ProductList';
 import NoStoreFound from './NoStoreFound';
@@ -15,6 +15,8 @@ const VisitStore = () => {
   const [activeTab, setActiveTab] = useState('products');
   const [sortOption, setSortOption] = useState('default');
   const [showSchedule, setShowSchedule] = useState(false);
+
+  // console.log(store.socialProfiles.facebook != '' ? "icon" : '')
 
   useEffect(() => {
     axios
@@ -111,7 +113,7 @@ const VisitStore = () => {
                 {/* vendor email */}
                 <div className='flex gap-2 items-center cursor-pointer pl-5'>
                   <div>
-                    <MdOutlineEmail className='text-xl'/>
+                    <MdOutlineEmail className='text-xl' />
                   </div>
                   <div>
                     {store.email}
@@ -167,6 +169,58 @@ const VisitStore = () => {
                 </div>
               )}
             </div>
+
+
+            {/* Social icon tab */}
+            <div className='absolute bottom-0 right-0  gap-5 bg-white flex items-center justify-center '>
+              {/* facebook icon */}
+              {store.socialProfiles.facebook && store.socialProfiles.facebook !== '' && (
+                <a href={store.socialProfiles.facebook} target="_blank" rel="noopener noreferrer">
+                  {/* <FaFacebook  className="text-blue-500 text-xl" title="Facebook" /> */}
+
+                  <i class="fab fa-facebook-square text-[25px] text-[#3b5998]"></i>
+                </a>
+              )}
+
+              {/* twitter icon */}
+              {store.socialProfiles.twitter && store.socialProfiles.twitter !== '' && (
+                <a href={store.socialProfiles.twitter} target="_blank" rel="noopener noreferrer">
+                  {/* <FaTwitter className="text-white text-xl" title="Twitter" /> */}
+                  <i class="fa-brands fa-square-twitter text-[25px] text-blue-500"></i>
+
+                </a>
+              )}
+
+              {/* instagram icon */}
+              {store.socialProfiles.instagram && store.socialProfiles.instagram !== '' && (
+                <a href={store.socialProfiles.instagram} target="_blank" rel="noopener noreferrer">
+                  {/* <FaInstagram className="text-red-500 text-xl" title="Instagram" /> */}
+                  <i class="fa-brands fa-square-instagram text-[25px] text-red-500"></i>
+                </a>
+              )}
+
+              {/* pinterest icon */}
+              {store.socialProfiles.pinterest && store.socialProfiles.pinterest !== '' && (
+                <a href={store.socialProfiles.pinterest} target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-square-pinterest text-[25px] text-pink-500"></i>
+                </a>
+              )}
+
+              {/* linkdin icon */}
+              {store.socialProfiles.linkedin && store.socialProfiles.linkedin !== '' && (
+                <a href={store.socialProfiles.linkedin} target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-linkedin text-[25px]"></i>
+                </a>
+              )}
+
+              {/* youtube icon */}
+              {store.socialProfiles.youtube && store.socialProfiles.youtube !== '' && (
+                <a href={store.socialProfiles.youtube} target="_blank" rel="noopener noreferrer">
+                  <i class="fa-brands fa-youtube text-[25px] text-red-500"></i>
+                </a>
+              )}
+            </div>
+
             <p className="text-gray-200">
               <span className="text-white text-xl font-bold">Rating:</span>{' '}
               <span className="text-orange-500 font-semibold">

@@ -22,6 +22,8 @@ const SingleProduct = () => {
   const dispatch = useDispatch();
   const wishList = useSelector((store) => store.wishList.data || []);
 
+  console.log(moreProducts)
+
   const [isProductInWishList, setIsProductInWishList] = useState(false);
   const [mainImage, setMainImage] = useState("");
 
@@ -93,6 +95,7 @@ const SingleProduct = () => {
                         />
                       </div>
                       <div className="flex flex-col gap-2">
+                        <h2 className='mt-2 text-gray-400 text-[14px]'>{product.category.name}</h2>
                         <h3 className="text-xl font-medium text-[#3a3c3c]">
                           {product.name}
                         </h3>
@@ -278,6 +281,7 @@ const SingleProduct = () => {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
+                    <h2 className='mt-2 text-gray-400 text-[14px]'>{product.category.name}</h2>
                     <h3 className="text-xl font-medium text-[#3a3c3c]">
                       {product.name}
                     </h3>

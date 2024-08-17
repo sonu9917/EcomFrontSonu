@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const StoreSeo = () => {
   // State to handle form inputs
@@ -34,7 +35,7 @@ const StoreSeo = () => {
     <div className="container mx-auto p-8">
       <div className="max-w-3xl mx-auto bg-white  overflow-hidden">
         <div className='flex items-center gap-4 font-bold mb-4  border-b-[1px] pb-4'>
-          <span className='text-[24px] pt-[13px] '>Store SEO</span> <span className='text-[80%] pt-3'>→</span> <span className='text-[#F05025] pt-3 text-[19px] cursor-pointer'>Visit Store</span>
+          <span className='text-[24px] pt-[13px] '>Store SEO</span> <span className='text-[80%] pt-3'>→</span> <Link to={'/admin/visitStore'} className='text-[#F05025] pt-3 text-[19px] cursor-pointer'>Visit Store</Link>
         </div>
 
 

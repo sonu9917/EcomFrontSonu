@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "../axiosConfig";
 import { toast } from "react-toastify";
-import { FaFacebook, FaTwitterSquare, FaPinterest, FaLinkedin, FaYoutube, FaInstagram } from "react-icons/fa";
+import { FaFacebook, FaTwitterSquare, FaPinterest, FaLinkedin, FaYoutube, FaInstagram,FaFlickr } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { BsFillThreadsFill } from "react-icons/bs";
 
 const SocialLinks = () => {
     const [socialProfiles, setSocialProfiles] = useState({
@@ -10,7 +12,9 @@ const SocialLinks = () => {
         pinterest: "",
         linkedin: "",
         youtube: "",
-        instagram: ""
+        instagram: "",
+        flicker:"",
+        threads:""
     });
 
     const handleInputChange = (e) => {
@@ -26,8 +30,9 @@ const SocialLinks = () => {
     const handleSave = async () => {
 
         try {
-            await axios.put("/store/updateStore", { socialProfiles }).then(
+            await axios.put("/store/updateSocialLinks", { socialProfiles }).then(
                 (response) => {
+                    console.log(response)
                     toast.success(response.data.message);
                     setSocialProfiles({
                         facebook: "",
@@ -35,7 +40,8 @@ const SocialLinks = () => {
                         pinterest: "",
                         linkedin: "",
                         youtube: "",
-                        instagram: ""
+                        instagram: "",
+                        flicker:''
                     });
                 }
             ).catch((err) => {
@@ -46,7 +52,8 @@ const SocialLinks = () => {
                     pinterest: "",
                     linkedin: "",
                     youtube: "",
-                    instagram: ""
+                    instagram: "",
+                    flicker:''
                 });
             });
         } catch (error) {
@@ -61,13 +68,15 @@ const SocialLinks = () => {
         pinterest: <FaPinterest className="w-4 h-6 text-white" />,
         linkedin: <FaLinkedin className="w-4 h-6 text-white" />,
         youtube: <FaYoutube className="w-4 h-6 text-white" />,
-        instagram: <FaInstagram className="w-4 h-6 text-white" />
+        instagram: <FaInstagram className="w-4 h-6 text-white" />,
+        flicker: <FaFlickr className="w-4 h-6 text-white" />,
+        threads:<BsFillThreadsFill className="w-4 h-6 text-white"/>
     };
 
     return (
         <div className="container mx-auto p-4">
             <div className='flex items-center gap-4 font-bold mb-4  border-b-[1px] pb-4'>
-                <span className='text-[24px] pt-[13px] '>Shipping Settings</span> <span className='text-[80%] pt-3'>→</span> <span className='text-[#F05025] pt-3 text-[19px] cursor-pointer'>Visit Store</span>
+                <span className='text-[24px] pt-[13px] '>Social Profiles </span> <span className='text-[80%] pt-3'>→</span> <Link to={'/admin/visitStore'} className='text-[#F05025] pt-3 text-[19px] cursor-pointer'>Visit Store</Link>
             </div>
 
             <h2 className="text-2xl mb-4 text-[#888888] text-[16px]">
